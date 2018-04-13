@@ -4,20 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f19f9f"
     tools:context="com.zdd.wzq.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <com.zdd.wzq.view.CheckerboardView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
 
-        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#fc0404"/>
+    <com.zdd.wzq.view.CheckerboardView
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:layout_centerInParent="true"
+        app:grid_numX="14"
+        app:grid_numY="14"
+        app:padding="4dp"
+        >
+
+    </com.zdd.wzq.view.CheckerboardView>
 
 </RelativeLayout>
