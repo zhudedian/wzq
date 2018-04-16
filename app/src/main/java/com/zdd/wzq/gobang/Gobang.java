@@ -8,12 +8,14 @@ import java.lang.Math;
 import java.util.Scanner;
 import java.io.*;
 import android.os.Handler;
+import android.util.Log;
 
 public class Gobang{
     String[][] board;
     String[][] board2=new String[boardSize][boardSize];
     private static int boardSize=15;
     static int judgeWhetherGo = 0;
+    private int playerPiece = 0;
     private ComputerPieceListener listener;
 
     public Gobang(ComputerPieceListener listener){
@@ -26,6 +28,8 @@ public class Gobang{
     */
     public void initBoard(){
         board = new String[boardSize][boardSize];
+        judgeWhetherGo = 0;
+        playerPiece = 0;
         for(int i = 0; i<boardSize; i++){
             for(int j =0; j<boardSize; j++){
                 board[i][j] = "＋";
@@ -82,334 +86,328 @@ public class Gobang{
     *电脑自动下一棋子
     */
     public void autoGetPieces(){
+        if (playerPiece<10) {
+            playerPiece = 0;
+            for (int i = 0; i < boardSize; i++) {
+                for (int j = 0; j < boardSize; j++) {
+                    if (board[i][j] == "●") playerPiece++;
+                }
+            }
+        }
+//        Log.i("Gobang","playerPiece="+playerPiece);
         BasicCal basic = new BasicCal();
-        String signal;
-        signal =basic.basicComputerMustAttack4s4(board); //四个子的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;}
+        basic.setBorder(getMinX(board),getMinY(board),getMaxX(board),getMaxY(board));
+        String signal = null;
+        if (playerPiece>=4) {
+            signal = basic.basicComputerMustAttack4s4(board); //四个子的时候
 
-        signal =basic.basicComputerMustAttack5s4(board); //五缺一的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;}
 
-        signal =basic.basicPlayerMustAttack4s4(board); //堵四个子的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+            signal = basic.basicComputerMustAttack5s4(board); //五缺一的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;}
 
-        signal =basic.basicPlayerMustAttack5s4(board); //堵五缺一的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+            signal = basic.basicPlayerMustAttack4s4(board); //堵四个子的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;}
 
-        signal =basic.basicComputerMustAttack4s3(board); //四缺一的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+            signal = basic.basicPlayerMustAttack5s4(board); //堵五缺一的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;}
-
-        signal =basic.basicComputerMustAttack7s4(board); //七中有四的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        }
+        if (playerPiece>=3) {
+            signal = basic.basicComputerMustAttack4s3(board); //四缺一的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;}
-
-        signal =basic.basicComputerMustAttack33(board); //两列三个的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        }
+        if (playerPiece>=4) {
+            signal = basic.basicComputerMustAttack7s4(board); //七中有四的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;}
-
-        signal =basic.basicComputerMustAttack3s3(board); //独立三个的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        }
+        if (playerPiece>=6) {
+            signal = basic.basicComputerMustAttack33(board); //两列三个的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;}
+        }
+        if (playerPiece>=3) {
+            signal = basic.basicComputerMustAttack3s3(board); //独立三个的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+        }
 
 
 /*
 *特殊算法--------
 */
-        Calculate calculate = new Calculate();
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if(board[i][j]!="○"&&board[i][j]!="●"){
+        if (playerPiece>=8) {
+            Calculate calculate = new Calculate();
+            for (int i = 0; i < boardSize; i++) {
+                for (int j = 0; j < boardSize; j++) {
+                    if (board[i][j] != "○" && board[i][j] != "●") {
 
-                    for(int m=0; m<boardSize; m++){
-                        for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                            board2[m][n]=board[m][n];
-                        }}
-                    int computerWin=calculate.demoComputer(board2,i,j);
-                    if(computerWin==1){board[i][j]="☆";
-                        if (listener!=null){
-                            listener.result(i,j);
-                        }
-                        return;}
-
-                }}}
-        int times = 0;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                    for(int m=0; m<boardSize; m++){
-                        for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                            board2[m][n]=board[m][n];
-                        }}
-                    int playerWin=calculate.demoPlayer(board2,i,j);
-                    if(playerWin==0)times++;
-
-
-                }}}
-        if((times<5)&&(times>0)){
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer(board2,i,j);
-                        if(playerWin==0){board[i][j]="☆";
-                            if (listener!=null){
-                                listener.result(i,j);
+                        for (int m = 0; m < boardSize; m++) {
+                            for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                board2[m][n] = board[m][n];
                             }
-                            return;}
+                        }
+                        int computerWin = calculate.demoComputer(board2, i, j);
+                        if (computerWin == 1) {
+                            board[i][j] = "☆";
+                            sendData(i, j);
+                            return;
+                        }
 
-
-                    }}}}
-
-
-
-
-        signal =basic.basicPlayerMustAttack4s3(board); //堵四缺一的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+                    }
+                }
             }
-            return;
+            int times = 0;
+            for (int i = 0; i < boardSize; i++) {
+                for (int j = 0; j < boardSize; j++) {
+                    if (board[i][j] != "○" && board[i][j] != "●") {
+
+                        for (int m = 0; m < boardSize; m++) {
+                            for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                board2[m][n] = board[m][n];
+                            }
+                        }
+                        int playerWin = calculate.demoPlayer(board2, i, j);
+                        if (playerWin == 0) times++;
+                    }
+                }
+            }
+            if ((times < 5) && (times > 0)) {
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer(board2, i, j);
+                            if (playerWin == 0) {
+                                board[i][j] = "☆";
+                                sendData(i, j);
+                                return;
+                            }
+
+
+                        }
+                    }
+                }
+            }
+
+
         }
-
-        signal =basic.basicPlayerMustAttack7s4(board); //堵七中有四的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        if (playerPiece>=3) {
+            signal = basic.basicPlayerMustAttack4s3(board); //堵四缺一的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;
         }
-
-        signal =basic.basicPlayerMustAttack33(board); //堵两列三个的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        if (playerPiece>=4) {
+            signal = basic.basicPlayerMustAttack7s4(board); //堵七中有四的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;
         }
-
-        signal =basic.basicPlayerMustAttack3s3(board); //堵独立三个的时候
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        if (playerPiece>=6) {
+            signal = basic.basicPlayerMustAttack33(board); //堵两列三个的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;
         }
-
-        signal =basic.basicComputerMustAttack22(board); //两列两个以上
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        if (playerPiece>=3) {
+            signal = basic.basicPlayerMustAttack3s3(board); //堵独立三个的时候
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;
         }
-
-        signal =basic.basicPlayerMustAttack22(board); //堵两列两个以上
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+        if (playerPiece>=4) {
+            signal = basic.basicComputerMustAttack22(board); //两列两个以上
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;
-        }
 
 
-
-
-        signal =basic.basicComputerAttack32s23(board); //独立两子随机下
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
+            signal = basic.basicPlayerMustAttack22(board); //堵两列两个以上
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
             }
-            return;
-        }
-
-        signal =basic.basicComputerAttack22s23(board); //独立两子
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;
-        }
-
-        signal =basic.basicComputerAttack12s23(board); //独立两子一头空一个
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;
-        }
-
-        signal =basic.basicComputerAttack4s2(board); //四子中间隔两个
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;
-        }
-
-        signal =basic.basicComputerAttack3s2(board); //三缺一
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;
-        }
-
-        signal =basic.basicComputerAttack03s32(board); //延伸三个成四个
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;
-        }
-
-        signal =basic.basicComputerAttack04s31(board); //补四缺一成四个
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;
-        }
-
-        signal =basic.basicComputerAttack05s30(board); //补五缺二
-        if(signal!=null){
-            String[] signalxy = signal.split(" ");
-            int x = Integer.parseInt(signalxy[0]);
-            int y = Integer.parseInt(signalxy[1]);
-            board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
-            return;
 
         }
 
+        if (playerPiece>=2) {
+            signal = basic.basicComputerAttack32s23(board); //独立两子随机下
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+
+            signal = basic.basicComputerAttack22s23(board); //独立两子
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+
+            signal = basic.basicComputerAttack12s23(board); //独立两子一头空一个
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+
+            signal = basic.basicComputerAttack4s2(board); //四子中间隔两个
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+
+            signal = basic.basicComputerAttack3s2(board); //三缺一
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+        }
+        if (playerPiece>=3) {
+            signal = basic.basicComputerAttack03s32(board); //延伸三个成四个
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+
+            signal = basic.basicComputerAttack04s31(board); //补四缺一成四个
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+            }
+
+            signal = basic.basicComputerAttack05s30(board); //补五缺二
+            if (signal != null) {
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";
+                sendData(x, y);
+                return;
+
+            }
+        }
         signal =basic.basicComputerAttack31s13(board); //独立一子随机
         if(signal!=null){
             String[] signalxy = signal.split(" ");
             int x = Integer.parseInt(signalxy[0]);
             int y = Integer.parseInt(signalxy[1]);
             board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
+            sendData(x,y);
             return;
         }
 
@@ -419,16 +417,12 @@ public class Gobang{
             int x = Integer.parseInt(signalxy[0]);
             int y = Integer.parseInt(signalxy[1]);
             board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
+            sendData(x,y);
             return;}
 
         if(board[7][7]!="●"&&board[7][7]!="○"){
             board[7][7] = "☆";
-            if (listener!=null){
-                listener.result(7,7);
-            }
+            sendData(7,7);
             return;
         }
 
@@ -438,9 +432,7 @@ public class Gobang{
             int x = Integer.parseInt(signalxy[0]);
             int y = Integer.parseInt(signalxy[1]);
             board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
+            sendData(x,y);
             return;
         }
 
@@ -450,38 +442,28 @@ public class Gobang{
             int x = Integer.parseInt(signalxy[0]);
             int y = Integer.parseInt(signalxy[1]);
             board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
+            sendData(x,y);
             return;
         }
 
         if(board[11][3]!="●"&&board[11][3]!="○"){
             board[11][3] = "☆";
-            if (listener!=null){
-                listener.result(11,3);
-            }
+            sendData(11,3);
             return;
         }
         if(board[11][11]!="●"&&board[11][11]!="○"){
             board[11][11] = "☆";
-            if (listener!=null){
-                listener.result(11,11);
-            }
+            sendData(11,11);
             return;
         }
         if(board[3][11]!="●"&&board[3][11]!="○"){
             board[3][11] = "☆";
-            if (listener!=null){
-                listener.result(3,11);
-            }
+            sendData(3,11);
             return;
         }
         if(board[3][3]!="●"&&board[3][3]!="○"){
             board[3][3] = "☆";
-            if (listener!=null){
-                listener.result(3,3);
-            }
+            sendData(3,3);
             return;
         }
 
@@ -491,9 +473,7 @@ public class Gobang{
             int x = Integer.parseInt(signalxy[0]);
             int y = Integer.parseInt(signalxy[1]);
             board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
+            sendData(x,y);
             return;
         }
         signal =basic.basicPlayerAttack11s11(board); //空地方挨着黑子下一子
@@ -502,9 +482,7 @@ public class Gobang{
             int x = Integer.parseInt(signalxy[0]);
             int y = Integer.parseInt(signalxy[1]);
             board[x][y] = "☆";
-            if (listener!=null){
-                listener.result(x,y);
-            }
+            sendData(x,y);
             return;
         }
 
@@ -740,46 +718,106 @@ public class Gobang{
     }
     public void play(){
 
+        new Thread(){
+            public void run(){
 
-//            printBoard();
+
+
+            printBoard();
             whoWin();
             if(judgeWhetherGo ==1){
-//                printBoard();
-                System.out.println("恭喜您赢了！");
-                if (listener!=null){
-                    listener.end("恭喜您赢了！");
-                }
+                printBoard();
+                sendData("恭喜您赢了！");
+                return;
             }
             autoGetPieces();
-//            printBoard();
+            printBoard();
             whoWin();
             whetherDraw();
             if(judgeWhetherGo ==1){
-                System.out.println("这局您输了！");
-                if (listener!=null){
-                    listener.end("这局您输了！");
-                }
+                sendData("这局您输了！");
+                return;
             }
             if(judgeWhetherGo ==2){
-                System.out.println("这局和棋！棋盘下满了！");
-                if (listener!=null){
-                    listener.end("这局和棋！棋盘下满了！");
-                }
+                sendData("这局和棋！棋盘下满了！");
+                return;
             }
             if(judgeWhetherGo ==3){
-                System.out.println("这局和棋！双方都没有机会赢了！");
-                if (listener!=null){
-                    listener.end("这局和棋！双方都没有机会赢了！");
-                }
+                sendData("这局和棋！双方都没有机会赢了！");
+                return;
             }
         change();
+            }
+        }.start();
+    }
+
+    private int getMinX(String[][] board){
+        for(int i=0; i<boardSize; i++){
+            for(int j=0; j<boardSize;j++){
+                if(board[i][j]=="○"||board[i][j]=="●")return i;
+            }
+        }
+        return 0;
+    }
+    private int getMaxX(String[][] board){
+        for(int i=boardSize; i>0; i--){
+            for(int j=0; j<boardSize;j++){
+                if(board[i-1][j]=="○"||board[i-1][j]=="●")return i;
+            }
+        }
+        return boardSize;
+    }
+    private int getMinY(String[][] board){
+        for(int i=0; i<boardSize; i++){
+            for(int j=0; j<boardSize;j++){
+                if(board[j][i]=="○"||board[j][i]=="●")return i;
+            }
+        }
+        return 0;
+    }
+    private int getMaxY(String[][] board){
+        for(int i=boardSize; i>0; i--){
+            for(int j=0; j<boardSize;j++){
+                if(board[j][i-1]=="○"||board[j][i-1]=="●")return i;
+            }
+        }
+        return boardSize;
+    }
+
+    private void sendData(int x,int y){
+        Message message = mHandler.obtainMessage();
+        message.what = 0;
+        Bundle data = new Bundle();
+        data.putInt("cosX", x);
+        data.putInt("cosY", y);
+        message.setData(data);
+        mHandler.sendMessage(message);
+    }
+    private void sendData(String result){
+        Message message = mHandler.obtainMessage();
+        message.what = 1;
+        Bundle data = new Bundle();
+        data.putString("result", result);
+        message.setData(data);
+        mHandler.sendMessage(message);
     }
     private Handler mHandler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg){
+            if (msg == null) {
+                return;
+            }
             switch (msg.what) {
                 case 0:
-
+                    Bundle bundle = msg.getData();
+                    if (bundle == null) {
+                        return;
+                    }
+                    int cosX = bundle.getInt("cosX");
+                    int cosY = bundle.getInt("cosY");
+                    if (listener!=null){
+                        listener.result(cosX,cosY);
+                    }
                     break;
                 case 1:
                     Bundle data = msg.getData();

@@ -1,9 +1,21 @@
 package com.zdd.wzq.gobang;
 
+import android.util.Log;
+
 import java.lang.Math;
 public class BasicCal{
     String[][] board;
+
     private static int boardSize=15;
+    private int minX=0,minY=0,maxX=boardSize,maxY=boardSize;
+    public void setBorder(int minX,int minY,int maxX,int maxY){
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+        Log.i("BasicCal","minX="+minX+"minY="+minY+"maxX="+maxX+"maxY="+maxY);
+    }
+
     public BasicCal(){
         this.board = new String[boardSize][boardSize];
     }
@@ -12,63 +24,42 @@ public class BasicCal{
     */
     public String basicComputerMustAttack4s4(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==4){
                         if((j+4)<boardSize&&board[i][j+4]!="●"&&board[i][j+4]!="○"){return i+" "+(j+4);}
                         else if((j-1)>=0&&board[i][j-1]!="●"&&board[i][j-1]!="○"){return i+" "+(j-1);}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==4){
                         if((i+4)<boardSize&&board[i+4][j]!="●"&&board[i+4][j]!="○"){return (i+4)+" "+j;}
                         else if((i-1)>=0&&board[i-1][j]!="●"&&board[i-1][j]!="○"){return (i-1)+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==4){
                         if((i+4)<boardSize&&(j+4)<boardSize&&board[i+4][j+4]!="●"&&board[i+4][j+4]!="○"){return (i+4)+" "+(j+4);}
                         else if((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○"){return (i-1)+" "+(j-1);}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==4){
                         if((i-4)>=0&&(j+4)<15&&board[i-4][j+4]!="●"&&board[i-4][j+4]!="○"){return (i-4)+" "+(j+4);}
@@ -84,63 +75,42 @@ public class BasicCal{
     */
     public String basicPlayerMustAttack4s4(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==4){
                         if((j+4)<boardSize&&board[i][j+4]!="●"&&board[i][j+4]!="○"){return i+" "+(j+4);}
                         else if((j-1)>=0&&board[i][j-1]!="●"&&board[i][j-1]!="○"){return i+" "+(j-1);}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==4){
                         if((i+4)<boardSize&&board[i+4][j]!="●"&&board[i+4][j]!="○"){return (i+4)+" "+j;}
                         else if((i-1)>=0&&board[i-1][j]!="●"&&board[i-1][j]!="○"){return (i-1)+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==4){
                         if((i+4)<boardSize&&(j+4)<boardSize&&board[i+4][j+4]!="●"&&board[i+4][j+4]!="○"){return (i+4)+" "+(j+4);}
                         else if((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○"){return (i-1)+" "+(j-1);}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==4){
                         if((i-4)>=0&&(j+4)<15&&board[i-4][j+4]!="●"&&board[i-4][j+4]!="○"){return (i-4)+" "+(j+4);}
@@ -155,34 +125,26 @@ public class BasicCal{
     */
     public String basicComputerMustAttack5s4(String[][] newboard){
         board=newboard;
-        String[] judge = new String[5];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+4)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i][j+k]=="○")o++;
+
                     }
+
                     if(o==4){
                         if(board[i][j+1]!="●"&&board[i][j+1]!="○"){return i+" "+(j+1);}
                         if(board[i][j+2]!="●"&&board[i][j+2]!="○"){return i+" "+(j+2);}
                         if(board[i][j+3]!="●"&&board[i][j+3]!="○"){return i+" "+(j+3);}
                     }
                 }
-                if((i+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+4)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j]=="○")o++;
+
                     }
                     if(o==4){
                         if(board[i+1][j]!="●"&&board[i+1][j]!="○"){return (i+1)+" "+j;}
@@ -190,15 +152,11 @@ public class BasicCal{
                         if(board[i+3][j]!="●"&&board[i+3][j]!="○"){return (i+3)+" "+j;}
                     }
                 }
-                if((i+4)<boardSize&&(j+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+4)<maxX&&(j+4)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j+k]=="○")o++;
+
                     }
                     if(o==4){
                         if(board[i+1][j+1]!="●"&&board[i+1][j+1]!="○"){return (i+1)+" "+(j+1);}
@@ -206,15 +164,11 @@ public class BasicCal{
                         if(board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"){return (i+3)+" "+(j+3);}
                     }
                 }
-                if((i-4)>0&&(j+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-4)>minX&&(j+4)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i-k][j+k]=="○")o++;
+
                     }
                     if(o==4){
                         if(board[i-1][j+1]!="●"&&board[i-1][j+1]!="○"){return (i-1)+" "+(j+1);}
@@ -230,18 +184,13 @@ public class BasicCal{
     */
     public String basicPlayerMustAttack5s4(String[][] newboard){
         board=newboard;
-        String[] judge = new String[5];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+4)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i][j+k]=="●")o++;
+
                     }
                     if(o==4){
                         if(board[i][j+1]!="●"&&board[i][j+1]!="○"){return i+" "+(j+1);}
@@ -249,15 +198,11 @@ public class BasicCal{
                         if(board[i][j+3]!="●"&&board[i][j+3]!="○"){return i+" "+(j+3);}
                     }
                 }
-                if((i+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+4)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j]=="●")o++;
+
                     }
                     if(o==4){
                         if(board[i+1][j]!="●"&&board[i+1][j]!="○"){return (i+1)+" "+j;}
@@ -265,15 +210,11 @@ public class BasicCal{
                         if(board[i+3][j]!="●"&&board[i+3][j]!="○"){return (i+3)+" "+j;}
                     }
                 }
-                if((i+4)<boardSize&&(j+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+4)<maxX&&(j+4)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j+k]=="●")o++;
+
                     }
                     if(o==4){
                         if(board[i+1][j+1]!="●"&&board[i+1][j+1]!="○"){return (i+1)+" "+(j+1);}
@@ -281,15 +222,11 @@ public class BasicCal{
                         if(board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"){return (i+3)+" "+(j+3);}
                     }
                 }
-                if((i-4)>0&&(j+4)<boardSize){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-4)>minX&&(j+4)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i-k][j+k]=="●")o++;
+
                     }
                     if(o==4){
                         if(board[i-1][j+1]!="●"&&board[i-1][j+1]!="○"){return (i-1)+" "+(j+1);}
@@ -305,18 +242,13 @@ public class BasicCal{
     */
     public String basicComputerMustAttack4s3(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="○")o++;
+
                     }
                     if(o==3){
                         if((j+4)<boardSize&&(j-1)>=0&&board[i][j-1]!="●"&&board[i][j+4]!="●")
@@ -324,15 +256,11 @@ public class BasicCal{
                             if(board[i][j+2]!="●"&&board[i][j+2]!="○"){return i+" "+(j+2);}}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="○")o++;
+
                     }
                     if(o==3){
                         if((i-1)>=0&&(i+4)<boardSize&&board[i-1][j]!="●"&&board[i+4][j]!="●")
@@ -340,15 +268,11 @@ public class BasicCal{
                             if(board[i+2][j]!="●"&&board[i+2][j]!="○"){return (i+2)+" "+j;}}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="○")o++;
+
                     }
                     if(o==3){
                         if((i+4)<boardSize &&(j+4)<boardSize&&(i-1)>=0&&(j-1)>=0&&board[i+4][j+4]!="●"&&board[i-1][j-1]!="●")
@@ -356,15 +280,11 @@ public class BasicCal{
                             if(board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"){return (i+2)+" "+(j+2);}}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="○")o++;
+
                     }
                     if(o==3){
                         if((i+1)<boardSize&&(j-1)>=0&&(i-4)>=0&&(j+4)<boardSize&&board[i+1][j-1]!="●"&&board[i-4][j+4]!="●")
@@ -380,18 +300,13 @@ public class BasicCal{
     */
     public String basicPlayerMustAttack4s3(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="●")o++;
+
                     }
                     if(o==3){
                         if((j+4)<boardSize&&(j-1)>=0&&board[i][j-1]!="○"&&board[i][j+4]!="○")
@@ -399,15 +314,11 @@ public class BasicCal{
                             if(board[i][j+2]!="●"&&board[i][j+2]!="○"){return i+" "+(j+2);}}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="●")o++;
+
                     }
                     if(o==3){
                         if((i-1)>=0&&(i+4)<boardSize&&board[i-1][j]!="○"&&board[i+4][j]!="○")
@@ -415,15 +326,11 @@ public class BasicCal{
                             if(board[i+2][j]!="●"&&board[i+2][j]!="○"){return (i+2)+" "+j;}}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="●")o++;
+
                     }
                     if(o==3){
                         if((i+4)<boardSize &&(j+4)<boardSize&&(i-1)>=0&&(j-1)>=0&&board[i+4][j+4]!="○"&&board[i-1][j-1]!="○")
@@ -431,15 +338,11 @@ public class BasicCal{
                             if(board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"){return (i+2)+" "+(j+2);}}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="●")o++;
+
                     }
                     if(o==3){
                         if((i+1)<boardSize&&(j-1)>=0&&(i-4)>=0&&(j+4)<boardSize&&board[i+1][j-1]!="○"&&board[i-4][j+4]!="○")
@@ -455,27 +358,27 @@ public class BasicCal{
     */
     public String basicComputerMustAttack7s4(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<minY;j++){
+                if((j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i][j+3]=="○"&&board[i][j+1]=="○"&&board[i][j-1]=="○"&&board[i][j-3]=="○")
                     {if(board[i][j+2]!="●"&&board[i][j-2]!="●")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(i-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<maxX&&(i-3)>=minX&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j]=="○"&&board[i+1][j]=="○"&&board[i-1][j]=="○"&&board[i-3][j]=="○")
                     {if(board[i+2][j]!="●"&&board[i-2][j]!="●")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j+3]=="○"&&board[i+1][j+1]=="○"&&board[i-1][j-1]=="○"&&board[i-3][j-3]=="○")
                     {if(board[i+2][j+2]!="●"&&board[i-2][j-2]!="●")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i-3][j+3]=="○"&&board[i-1][j+1]=="○"&&board[i+1][j-1]=="○"&&board[i+3][j-3]=="○")
                     {if(board[i-2][j+2]!="●"&&board[i+2][j-2]!="●")
                     {return i+" "+j;}
@@ -489,27 +392,27 @@ public class BasicCal{
     */
     public String basicPlayerMustAttack7s4(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i][j+3]=="●"&&board[i][j+1]=="●"&&board[i][j-1]=="●"&&board[i][j-3]=="●")
                     {if(board[i][j+2]!="○"&&board[i][j-2]!="○")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(i-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<maxX&&(i-3)>=minX&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j]=="●"&&board[i+1][j]=="●"&&board[i-1][j]=="●"&&board[i-3][j]=="●")
                     {if(board[i+2][j]!="○"&&board[i-2][j]!="○")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j+3]=="●"&&board[i+1][j+1]=="●"&&board[i-1][j-1]=="●"&&board[i-3][j-3]=="●")
                     {if(board[i+2][j+2]!="○"&&board[i-2][j-2]!="○")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i-3][j+3]=="●"&&board[i-1][j+1]=="●"&&board[i+1][j-1]=="●"&&board[i+3][j-3]=="●")
                     {if(board[i-2][j+2]!="○"&&board[i+2][j-2]!="○")
                     {return i+" "+j;}
@@ -523,90 +426,90 @@ public class BasicCal{
     */
     public String basicComputerMustAttack33(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
                 if(board[i][j]!="●"&&board[i][j]!="○"){
                     int line=0;
                     //-----------1------------
-                    if((j+3)<boardSize&&board[i][j+1]=="○"&&board[i][j+2]=="○"&&board[i][j+3]=="○"){
+                    if((j+3)<maxY&&board[i][j+1]=="○"&&board[i][j+2]=="○"&&board[i][j+3]=="○"){
                         if((j+4)<boardSize&&board[i][j+4]!="●")line++;
                         else if((j-1)>=0&&board[i][j-1]!="●")line++;
 
                     }
-                    if((j-1)>=0&&(j+2)<boardSize&&board[i][j+1]=="○"&&board[i][j+2]=="○"&&board[i][j-1]=="○"){
+                    if((j-1)>=minY&&(j+2)<maxY&&board[i][j+1]=="○"&&board[i][j+2]=="○"&&board[i][j-1]=="○"){
                         if((j+3)<boardSize&&board[i][j+3]!="●")line++;
                         else if((j-2)>=0&&board[i][j-2]!="●")line++;
 
                     }
-                    if((j-2)>=0&&(j+1)<boardSize&&board[i][j+1]=="○"&&board[i][j-2]=="○"&&board[i][j-1]=="○"){
+                    if((j-2)>=minY&&(j+1)<maxY&&board[i][j+1]=="○"&&board[i][j-2]=="○"&&board[i][j-1]=="○"){
                         if((j+2)<boardSize&&board[i][j+2]!="●")line++;
                         else if((j-3)>=0&&board[i][j-3]!="●")line++;
 
                     }
-                    if((j-3)>=0&&board[i][j-3]=="○"&&board[i][j-2]=="○"&&board[i][j-1]=="○"){
+                    if((j-3)>=minY&&board[i][j-3]=="○"&&board[i][j-2]=="○"&&board[i][j-1]=="○"){
                         if((j+1)<boardSize&&board[i][j+1]!="●")line++;
                         else if((j-4)>=0&&board[i][j-4]!="●")line++;
 
                     }
                     //------------2-----------
-                    if((i+3)<boardSize&&board[i+1][j]=="○"&&board[i+2][j]=="○"&&board[i+3][j]=="○"){
+                    if((i+3)<maxX&&board[i+1][j]=="○"&&board[i+2][j]=="○"&&board[i+3][j]=="○"){
                         if((i+4)<boardSize&&board[i+4][j]!="●")line++;
                         else if((i-1)>=0&&board[i-1][j]!="●")line++;
 
                     }
-                    if((i-1)>=0&&(i+2)<boardSize&&board[i+1][j]=="○"&&board[i+2][j]=="○"&&board[i-1][j]=="○"){
+                    if((i-1)>=minX&&(i+2)<maxX&&board[i+1][j]=="○"&&board[i+2][j]=="○"&&board[i-1][j]=="○"){
                         if((i+3)<boardSize&&board[i+3][j]!="●")line++;
                         else if((i-2)>=0&&board[i-2][j]!="●")line++;
 
                     }
-                    if((i-2)>=0&&(i+1)<boardSize&&board[i+1][j]=="○"&&board[i-2][j]=="○"&&board[i-1][j]=="○"){
+                    if((i-2)>=minX&&(i+1)<maxX&&board[i+1][j]=="○"&&board[i-2][j]=="○"&&board[i-1][j]=="○"){
                         if((i+2)<boardSize&&board[i+2][j]!="●")line++;
                         else if((i-3)>=0&&board[i-3][j]!="●")line++;
 
                     }
-                    if((i-3)>=0&&board[i-3][j]=="○"&&board[i-2][j]=="○"&&board[i-1][j]=="○"){
+                    if((i-3)>=minX&&board[i-3][j]=="○"&&board[i-2][j]=="○"&&board[i-1][j]=="○"){
                         if((i+1)<boardSize&&board[i+1][j]!="●")line++;
                         else if((i-4)>=0&&board[i-4][j]!="●")line++;
 
                     }
                     //------------3-----------
-                    if((i+3)<boardSize&&(j+3)<boardSize&&board[i+1][j+1]=="○"&&board[i+2][j+2]=="○"&&board[i+3][j+3]=="○"){
+                    if((i+3)<maxX&&(j+3)<maxY&&board[i+1][j+1]=="○"&&board[i+2][j+2]=="○"&&board[i+3][j+3]=="○"){
                         if((i+4)<boardSize&&(j+4)<boardSize&&board[i+4][j+4]!="●")line++;
                         else if((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="●")line++;
 
                     }
-                    if((i-1)>=0&&(i+2)<boardSize&&(j-1)>=0&&(j+2)<boardSize&&board[i+1][j+1]=="○"&&board[i+2][j+2]=="○"&&board[i-1][j-1]=="○"){
+                    if((i-1)>=minX&&(i+2)<maxX&&(j-1)>=minY&&(j+2)<maxY&&board[i+1][j+1]=="○"&&board[i+2][j+2]=="○"&&board[i-1][j-1]=="○"){
                         if((i+3)<boardSize&&(j+3)<boardSize&&board[i+3][j+3]!="●")line++;
                         else if((i-2)>=0&&(j-2)>=0&&board[i-2][j-2]!="●")line++;
 
                     }
-                    if((i-2)>=0&&(i+1)<boardSize&&(j-2)>=0&&(j+1)<boardSize&&board[i+1][j+1]=="○"&&board[i-2][j-2]=="○"&&board[i-1][j-1]=="○"){
+                    if((i-2)>=minX&&(i+1)<maxX&&(j-2)>=minY&&(j+1)<maxY&&board[i+1][j+1]=="○"&&board[i-2][j-2]=="○"&&board[i-1][j-1]=="○"){
                         if((i+2)<boardSize&&(j+2)<boardSize&&board[i+2][j+2]!="●")line++;
                         else if((i-3)>=0&&(j-3)>=0&&board[i-3][j-3]!="●")line++;
 
                     }
-                    if((i-3)>=0&&(j-3)>=0&&board[i-3][j-3]=="○"&&board[i-2][j-2]=="○"&&board[i-1][j-1]=="○"){
+                    if((i-3)>=minX&&(j-3)>=minY&&board[i-3][j-3]=="○"&&board[i-2][j-2]=="○"&&board[i-1][j-1]=="○"){
                         if((i+1)<boardSize&&(j+1)<boardSize&&board[i+1][j+1]!="●")line++;
                         else if((i-4)>=0&&(j-4)>=0&&board[i-4][j-4]!="●")line++;
 
                     }
                     //------------4-----------
-                    if((i+3)<boardSize&&(j-3)>=0&&board[i+1][j-1]=="○"&&board[i+2][j-2]=="○"&&board[i+3][j-3]=="○"){
+                    if((i+3)<maxX&&(j-3)>=minY&&board[i+1][j-1]=="○"&&board[i+2][j-2]=="○"&&board[i+3][j-3]=="○"){
                         if((i+4)<boardSize&&(j-4)>=0&&board[i+4][j-4]!="●")line++;
                         else if((i-1)>=0&&(j+1)<boardSize&&board[i-1][j+1]!="●")line++;
 
                     }
-                    if((i-1)>=0&&(i+2)<boardSize&&(j+1)<boardSize&&(j-2)>=0&&board[i+1][j-1]=="○"&&board[i+2][j-2]=="○"&&board[i-1][j+1]=="○"){
+                    if((i-1)>=minX&&(i+2)<maxX&&(j+1)<maxY&&(j-2)>=minY&&board[i+1][j-1]=="○"&&board[i+2][j-2]=="○"&&board[i-1][j+1]=="○"){
                         if((i+3)<boardSize&&(i-3)>=0&&board[i+3][j-3]!="●")line++;
                         else if((i-2)>=0&&(j+2)<boardSize&&board[i-2][j+2]!="●")line++;
 
                     }
-                    if((i-2)>=0&&(i+1)<boardSize&&(j+2)<boardSize&&(j-1)>=0&&board[i+1][j-1]=="○"&&board[i-2][j+2]=="○"&&board[i-1][j+1]=="○"){
+                    if((i-2)>=minX&&(i+1)<maxX&&(j+2)<maxY&&(j-1)>=minY&&board[i+1][j-1]=="○"&&board[i-2][j+2]=="○"&&board[i-1][j+1]=="○"){
                         if((i+2)<boardSize&&(j-2)>=0&&board[i+2][j-2]!="●")line++;
                         else if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]!="●")line++;
 
                     }
-                    if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]=="○"&&board[i-2][j+2]=="○"&&board[i-1][j+1]=="○"){
+                    if((i-3)>=minX&&(j+3)<maxY&&board[i-3][j+3]=="○"&&board[i-2][j+2]=="○"&&board[i-1][j+1]=="○"){
                         if((i+1)<boardSize&&(j-1)>=0&&board[i+1][j-1]!="●")line++;
                         else if((i-4)>=0&&(j+4)<boardSize&&board[i-4][j+4]!="●")line++;
 
@@ -624,90 +527,90 @@ public class BasicCal{
     */
     public String basicPlayerMustAttack33(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
                 if(board[i][j]!="●"&&board[i][j]!="○"){
                     int line=0;
                     //-----------1------------
-                    if((j+3)<boardSize&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j+3]=="●"){
+                    if((j+3)<maxY&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j+3]=="●"){
                         if((j+4)<boardSize&&board[i][j+4]!="○")line++;
                         else if((j-1)>=0&&board[i][j-1]!="○")line++;
 
                     }
-                    if((j-1)>=0&&(j+2)<boardSize&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j-1]=="●"){
+                    if((j-1)>=minY&&(j+2)<maxY&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j-1]=="●"){
                         if((j+3)<boardSize&&board[i][j+3]!="○")line++;
                         else if((j-2)>=0&&board[i][j-2]!="○")line++;
 
                     }
-                    if((j-2)>=0&&(j+1)<boardSize&&board[i][j+1]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
+                    if((j-2)>=minY&&(j+1)<maxY&&board[i][j+1]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
                         if((j+2)<boardSize&&board[i][j+2]!="○")line++;
                         else if((j-3)>=0&&board[i][j-3]!="○")line++;
 
                     }
-                    if((j-3)>=0&&board[i][j-3]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
+                    if((j-3)>=minY&&board[i][j-3]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
                         if((j+1)<boardSize&&board[i][j+1]!="○")line++;
                         else if((j-4)>=0&&board[i][j-4]!="○")line++;
 
                     }
                     //------------2-----------
-                    if((i+3)<boardSize&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i+3][j]=="●"){
+                    if((i+3)<maxX&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i+3][j]=="●"){
                         if((i+4)<boardSize&&board[i+4][j]!="○")line++;
                         else if((i-1)>=0&&board[i-1][j]!="○")line++;
 
                     }
-                    if((i-1)>=0&&(i+2)<boardSize&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i-1][j]=="●"){
+                    if((i-1)>=minX&&(i+2)<maxX&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i-1][j]=="●"){
                         if((i+3)<boardSize&&board[i+3][j]!="○")line++;
                         else if((i-2)>=0&&board[i-2][j]!="○")line++;
 
                     }
-                    if((i-2)>=0&&(i+1)<boardSize&&board[i+1][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
+                    if((i-2)>=minX&&(i+1)<maxX&&board[i+1][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
                         if((i+2)<boardSize&&board[i+2][j]!="○")line++;
                         else if((i-3)>=0&&board[i-3][j]!="○")line++;
 
                     }
-                    if((i-3)>=0&&board[i-3][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
+                    if((i-3)>=minX&&board[i-3][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
                         if((i+1)<boardSize&&board[i+1][j]!="○")line++;
                         else if((i-4)>=0&&board[i-4][j]!="○")line++;
 
                     }
                     //------------3-----------
-                    if((i+3)<boardSize&&(j+3)<boardSize&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i+3][j+3]=="●"){
+                    if((i+3)<maxX&&(j+3)<maxY&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i+3][j+3]=="●"){
                         if((i+4)<boardSize&&(j+4)<boardSize&&board[i+4][j+4]!="○")line++;
                         else if((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="○")line++;
 
                     }
-                    if((i-1)>=0&&(i+2)<boardSize&&(j-1)>=0&&(j+2)<boardSize&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i-1][j-1]=="●"){
+                    if((i-1)>=minX&&(i+2)<maxX&&(j-1)>=minY&&(j+2)<maxY&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i-1][j-1]=="●"){
                         if((i+3)<boardSize&&(j+3)<boardSize&&board[i+3][j+3]!="○")line++;
                         else if((i-2)>=0&&(j-2)>=0&&board[i-2][j-2]!="○")line++;
 
                     }
-                    if((i-2)>=0&&(i+1)<boardSize&&(j-2)>=0&&(j+1)<boardSize&&board[i+1][j+1]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
+                    if((i-2)>=minX&&(i+1)<maxX&&(j-2)>=minY&&(j+1)<maxY&&board[i+1][j+1]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
                         if((i+2)<boardSize&&(j+2)<boardSize&&board[i+2][j+2]!="○")line++;
                         else if((i-3)>=0&&(j-3)>=0&&board[i-3][j-3]!="○")line++;
 
                     }
-                    if((i-3)>=0&&(j-3)>=0&&board[i-3][j-3]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
+                    if((i-3)>=minX&&(j-3)>=minY&&board[i-3][j-3]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
                         if((i+1)<boardSize&&(j+1)<boardSize&&board[i+1][j+1]!="○")line++;
                         else if((i-4)>=0&&(j-4)>=0&&board[i-4][j-4]!="○")line++;
 
                     }
                     //------------4-----------
-                    if((i+3)<boardSize&&(j-3)>=0&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i+3][j-3]=="●"){
+                    if((i+3)<maxX&&(j-3)>=minY&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i+3][j-3]=="●"){
                         if((i+4)<boardSize&&(j-4)>=0&&board[i+4][j-4]!="○")line++;
                         else if((i-1)>=0&&(j+1)<boardSize&&board[i-1][j+1]!="○")line++;
 
                     }
-                    if((i-1)>=0&&(i+2)<boardSize&&(j+1)<boardSize&&(j-2)>=0&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i-1][j+1]=="●"){
+                    if((i-1)>=minX&&(i+2)<maxX&&(j+1)<maxY&&(j-2)>=minY&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i-1][j+1]=="●"){
                         if((i+3)<boardSize&&(i-3)>=0&&board[i+3][j-3]!="○")line++;
                         else if((i-2)>=0&&(j+2)<boardSize&&board[i-2][j+2]!="○")line++;
 
                     }
-                    if((i-2)>=0&&(i+1)<boardSize&&(j+2)<boardSize&&(j-1)>=0&&board[i+1][j-1]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
+                    if((i-2)>=minX&&(i+1)<maxX&&(j+2)<maxY&&(j-1)>=minY&&board[i+1][j-1]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
                         if((i+2)<boardSize&&(j-2)>=0&&board[i+2][j-2]!="○")line++;
                         else if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]!="○")line++;
 
                     }
-                    if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
+                    if((i-3)>=minX&&(j+3)<maxY&&board[i-3][j+3]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
                         if((i+1)<boardSize&&(j-1)>=0&&board[i+1][j-1]!="○")line++;
                         else if((i-4)>=0&&(j+4)<boardSize&&board[i-4][j+4]!="○")line++;
 
@@ -725,18 +628,12 @@ public class BasicCal{
     */
     public String basicComputerMustAttack3s3(String[][] newboard){
         board=newboard;
-        String[] judge = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==3){
                         if((j-1)>=0&&(j+3)<boardSize&&board[i][j+3]!="●"&&board[i][j+3]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -746,15 +643,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+2)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==3){
                         if((i-1)>=0&&(i+3)<boardSize&&board[i+3][j]!="●"&&board[i+3][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -765,15 +657,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+2)<maxX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if((i-1)>=0&&(j-1)>=0&&(i+3)<boardSize&&(j+3)<boardSize &&board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -784,15 +671,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>0&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-2)>minX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-3)>=0&&(j+3)<boardSize &&board[i-3][j+3]!="●"&&board[i-3][j+3]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -811,18 +693,12 @@ public class BasicCal{
     */
     public String basicPlayerMustAttack3s3(String[][] newboard){
         board=newboard;
-        String[] judge = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==3){
                         if((j-1)>=0&&(j+3)<boardSize&&board[i][j+3]!="●"&&board[i][j+3]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -832,34 +708,25 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+2)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==3){
-                        if((i-1)>=0&&(i+3)<boardSize&&board[i+3][j]!="●"&&board[i+3][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
-                        {if((i+4)<boardSize&&board[i+4][j]!="○")
-                        {return (i+3)+" "+j;}
-                        else if((i-2)>=0&&board[i-2][j]!="○")
-                        {return (i-1)+" "+j;}
+                        if((i-1)>=0&&(i+3)<boardSize&&board[i+3][j]!="●"&&board[i+3][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○") {
+                            if((i+4)<boardSize&&board[i+4][j]!="○") {
+                                return (i+3)+" "+j;}
+                            else if((i-2)>=0&&board[i-2][j]!="○") {
+                                return (i-1)+" "+j;
+                            }
                         }
                     }
                 }
-                if((i+2)<boardSize&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+2)<maxX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==3){
                         if((i-1)>=0&&(j-1)>=0&&(i+3)<boardSize&&(j+3)<boardSize &&board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -870,15 +737,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>0&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-2)>minX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==3){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-3)>=0&&(j+3)<boardSize &&board[i-3][j+3]!="●"&&board[i-3][j+3]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -897,21 +759,15 @@ public class BasicCal{
     */
     public String basicComputerMustAttack22(String[][] newboard){
         board=newboard;
-        String[] judge2 = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxY; i++){
+            for(int j=minY; j<maxY;j++){
                 if(board[i][j]!="●"&&board[i][j]!="○"){
                     int line=0;
                     for(int n=1;n>0;n--){
-                        if((j-1)>=0&&(j+3)<boardSize&&board[i][j-1]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i][j+s+1];
-                                s++;
-                            }
+                        if((j-1)>=minY&&(j+3)<maxY&&board[i][j-1]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i][j+k+1]=="○")o++;
                             }
                             if(o>=2){
                                 if((j+4)<boardSize&&board[i][j+1]!="●"&&board[i][j+2]!="●"&&board[i][j+3]!="●"&&board[i][j+4]!="●"){line++;break;}
@@ -919,15 +775,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((j-3)>=0&&(j+1)<boardSize&&board[i][j+1]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i][j-s-1];
-                                s++;
-                            }
+                        if((j-3)>=minY&&(j+1)<maxY&&board[i][j+1]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i][j-k-1]=="○")o++;
                             }
                             if(o>=2){
                                 if((j-4)>=0&&board[i][j-1]!="●"&&board[i][j-2]!="●"&&board[i][j-3]!="●"&&board[i][j-4]!="●"){line++;break;}
@@ -936,15 +787,10 @@ public class BasicCal{
                             }
                         }}
                     for(int n=1;n>0;n--){
-                        if((i-1)>=0&&(i+3)<boardSize&&board[i-1][j]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i+s+1][j];
-                                s++;
-                            }
+                        if((i-1)>=minX&&(i+3)<maxX&&board[i-1][j]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i+k+1][j]=="○")o++;
                             }
                             if(o>=2){
                                 if((i+4)<boardSize&&board[i+1][j]!="●"&&board[i+2][j]!="●"&&board[i+3][j]!="●"&&board[i+4][j]!="●"){line++;break;}
@@ -952,15 +798,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((i-3)>=0&&(i+1)<boardSize&&board[i+1][j]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i-s-1][j];
-                                s++;
-                            }
+                        if((i-3)>=minX&&(i+1)<maxX&&board[i+1][j]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i-k-1][j]=="○")o++;
                             }
                             if(o>=2){
                                 if((i-4)>=0&&board[i-1][j]!="●"&&board[i-2][j]!="●"&&board[i-3][j]!="●"&&board[i-4][j]!="●"){line++;break;}
@@ -969,15 +810,10 @@ public class BasicCal{
                             }
                         }}
                     for(int n=1;n>0;n--){
-                        if((i-1)>=0&&(j-1)>=0&&(i+3)<boardSize&&(j+3)<boardSize&&board[i-1][j-1]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i+s+1][j+s+1];
-                                s++;
-                            }
+                        if((i-1)>=minX&&(j-1)>=minY&&(i+3)<maxX&&(j+3)<maxY&&board[i-1][j-1]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i+k+1][j+k+1]=="○")o++;
                             }
                             if(o>=2){
                                 if((i+4)<boardSize&&(j+4)<boardSize&&board[i+1][j+1]!="●"&&board[i+2][j+2]!="●"&&board[i+3][j+3]!="●"&&board[i+4][j+4]!="●"){line++;break;}
@@ -985,15 +821,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((i+1)<boardSize&&(j+1)<boardSize&&(i-3)>=0&&(j-3)>=0&&board[i+1][j+1]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i-s-1][j-s-1];
-                                s++;
-                            }
+                        if((i+1)<maxX&&(j+1)<maxY&&(i-3)>=minX&&(j-3)>=minY&&board[i+1][j+1]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i-k-1][j-k-1]=="○")o++;
                             }
                             if(o>=2){
                                 if((i-4)>=0&&(j-4)>=0&&board[i-1][j-1]!="●"&&board[i-2][j-2]!="●"&&board[i-3][j-3]!="●"&&board[i-4][j-4]!="●"){line++;break;}
@@ -1002,15 +833,10 @@ public class BasicCal{
                             }
                         }}
                     for(int n=1;n>0;n--){
-                        if((i+1)<boardSize&&(j-1)>=0&&(i-3)>=0&&(j+3)<boardSize&&board[i+1][j-1]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i-s-1][j+s+1];
-                                s++;
-                            }
+                        if((i+1)<maxX&&(j-1)>=minY&&(i-3)>=minX&&(j+3)<maxY&&board[i+1][j-1]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i-k-1][j+k+1]=="○")o++;
                             }
                             if(o>=2){
                                 if((i-4)>=0&&(j+4)<boardSize&&board[i-1][j+1]!="●"&&board[i-2][j+2]!="●"&&board[i-3][j+3]!="●"&&board[i-4][j+4]!="●"){line++;break;}
@@ -1018,15 +844,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((i-1)>=0&&(j+1)<boardSize&&(i+3)<boardSize&&(j-3)>=0&&board[i-1][j+1]!="●"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i+s+1][j-s-1];
-                                s++;
-                            }
+                        if((i-1)>=minX&&(j+1)<maxY&&(i+3)<maxX&&(j-3)>=minY&&board[i-1][j+1]!="●"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="○")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i+k+1][j-k-1]=="○")o++;
                             }
                             if(o>=2){
                                 if((i+4)<boardSize&&(j-4)>=0&&board[i+1][j-1]!="●"&&board[i+2][j-2]!="●"&&board[i+3][j-3]!="●"&&board[i+4][j-4]!="●"){line++;break;}
@@ -1034,9 +855,12 @@ public class BasicCal{
 
                             }
                         }}
-                    if(line>=2){return i+" "+j;}
-
-                }}}
+                    if(line>=2){
+                        return i+" "+j;
+                    }
+                }
+            }
+        }
         return null;
     }
     /*
@@ -1044,21 +868,15 @@ public class BasicCal{
     */
     public String basicPlayerMustAttack22(String[][] newboard){
         board=newboard;
-        String[] judge2 = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
                 if(board[i][j]!="●"&&board[i][j]!="○"){
                     int line=0;
                     for(int n=1;n>0;n--){
-                        if((j-1)>=0&&(j+3)<boardSize&&board[i][j-1]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i][j+s+1];
-                                s++;
-                            }
+                        if((j-1)>=minY&&(j+3)<maxY&&board[i][j-1]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i][j+k+1]=="●")o++;
                             }
                             if(o>=2){
                                 if((j+4)<boardSize&&board[i][j+1]!="○"&&board[i][j+2]!="○"&&board[i][j+3]!="○"&&board[i][j+4]!="○"){line++;break;}
@@ -1066,15 +884,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((j-3)>=0&&(j+1)<boardSize&&board[i][j+1]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i][j-s-1];
-                                s++;
-                            }
+                        if((j-3)>=minY&&(j+1)<maxY&&board[i][j+1]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i][j-k-1]=="●")o++;
                             }
                             if(o>=2){
                                 if((j-4)>=0&&board[i][j-1]!="○"&&board[i][j-2]!="○"&&board[i][j-3]!="○"&&board[i][j-4]!="○"){line++;break;}
@@ -1083,15 +896,10 @@ public class BasicCal{
                             }
                         }}
                     for(int n=1;n>0;n--){
-                        if((i-1)>=0&&(i+3)<boardSize&&board[i-1][j]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i+s+1][j];
-                                s++;
-                            }
+                        if((i-1)>=minX&&(i+3)<maxX&&board[i-1][j]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i+k+1][j]=="●")o++;
                             }
                             if(o>=2){
                                 if((i+4)<boardSize&&board[i+1][j]!="○"&&board[i+2][j]!="○"&&board[i+3][j]!="○"&&board[i+4][j]!="○"){line++;break;}
@@ -1099,15 +907,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((i-3)>=0&&(i+1)<boardSize&&board[i+1][j]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i-s-1][j];
-                                s++;
-                            }
+                        if((i-3)>=minX&&(i+1)<maxX&&board[i+1][j]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i-k-1][j]=="●")o++;
                             }
                             if(o>=2){
                                 if((i-4)>=0&&board[i-1][j]!="○"&&board[i-2][j]!="○"&&board[i-3][j]!="○"&&board[i-4][j]!="○"){line++;break;}
@@ -1116,15 +919,10 @@ public class BasicCal{
                             }
                         }}
                     for(int n=1;n>0;n--){
-                        if((i-1)>=0&&(j-1)>=0&&(i+3)<boardSize&&(j+3)<boardSize&&board[i-1][j-1]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i+s+1][j+s+1];
-                                s++;
-                            }
+                        if((i-1)>=minX&&(j-1)>=minY&&(i+3)<boardSize&&(j+3)<boardSize&&board[i-1][j-1]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i+k+1][j+k+1]=="●")o++;
                             }
                             if(o>=2){
                                 if((i+4)<boardSize&&(j+4)<boardSize&&board[i+1][j+1]!="○"&&board[i+2][j+2]!="○"&&board[i+3][j+3]!="○"&&board[i+4][j+4]!="○"){line++;break;}
@@ -1132,15 +930,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((i+1)<boardSize&&(j+1)<boardSize&&(i-3)>=0&&(j-3)>=0&&board[i+1][j+1]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i-s-1][j-s-1];
-                                s++;
-                            }
+                        if((i+1)<maxX&&(j+1)<maxY&&(i-3)>=minX&&(j-3)>=minY&&board[i+1][j+1]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i-k-1][j-k-1]=="●")o++;
                             }
                             if(o>=2){
                                 if((i-4)>=0&&(j-4)>=0&&board[i-1][j-1]!="○"&&board[i-2][j-2]!="○"&&board[i-3][j-3]!="○"&&board[i-4][j-4]!="○"){line++;break;}
@@ -1149,15 +942,10 @@ public class BasicCal{
                             }
                         }}
                     for(int n=1;n>0;n--){
-                        if((i+1)<boardSize&&(j-1)>=0&&(i-3)>=0&&(j+3)<boardSize&&board[i+1][j-1]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i-s-1][j+s+1];
-                                s++;
-                            }
+                        if((i+1)<maxX&&(j-1)>=minY&&(i-3)>=minX&&(j+3)<maxY&&board[i+1][j-1]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i-k-1][j+k+1]=="●")o++;
                             }
                             if(o>=2){
                                 if((i-4)>=0&&(j+4)<boardSize&&board[i-1][j+1]!="○"&&board[i-2][j+2]!="○"&&board[i-3][j+3]!="○"&&board[i-4][j+4]!="○"){line++;break;}
@@ -1165,15 +953,10 @@ public class BasicCal{
 
                             }
                         }
-                        if((i-1)>=0&&(j+1)<boardSize&&(i+3)<boardSize&&(j-3)>=0&&board[i-1][j+1]!="○"){
-                            int s=0;
-                            for(int k=0; k<3;k++){
-                                judge2[k]=board[i+s+1][j-s-1];
-                                s++;
-                            }
+                        if((i-1)>=minX&&(j+1)<maxY&&(i+3)<maxX&&(j-3)>=minY&&board[i-1][j+1]!="○"){
                             int o=0;
-                            for(String jud:judge2){
-                                if(jud=="●")o++;
+                            for(int k=0; k<3;k++){
+                                if(board[i+k+1][j-k-1]=="●")o++;
                             }
                             if(o>=2){
                                 if((i+4)<boardSize&&(j-4)>=0&&board[i+1][j-1]!="○"&&board[i+2][j-2]!="○"&&board[i+3][j-3]!="○"&&board[i+4][j-4]!="○"){line++;break;}
@@ -1191,18 +974,12 @@ public class BasicCal{
     */
     public String basicComputerAttack32s23(String[][] newboard){
         board=newboard;
-        String[] judge = new String[2];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+2)<boardSize&&board[i][j+2]!="●"&&board[i][j+2]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -1217,15 +994,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+1)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+2)<boardSize&&board[i+2][j]!="●"&&board[i+2][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -1240,15 +1012,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+1)<maxX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+2)<boardSize&&(j+2)<boardSize&&board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -1263,15 +1030,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-1)>0&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-1)>minX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-2)>=0&&(j+2)<boardSize &&board[i-2][j+2]!="●"&&board[i-2][j+2]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -1294,18 +1056,12 @@ public class BasicCal{
     */
     public String basicPlayerAttack32s23(String[][] newboard){
         board=newboard;
-        String[] judge = new String[2];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+2)<boardSize&&board[i][j+2]!="●"&&board[i][j+2]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -1320,15 +1076,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+1)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+2)<boardSize&&board[i+2][j]!="●"&&board[i+2][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -1343,15 +1094,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+1)<maxX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+2)<boardSize&&(j+2)<boardSize&&board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -1366,15 +1112,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-1)>0&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-1)>minX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-2)>=0&&(j+2)<boardSize &&board[i-2][j+2]!="●"&&board[i-2][j+2]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -1397,18 +1138,12 @@ public class BasicCal{
     */
     public String basicComputerAttack22s23(String[][] newboard){
         board=newboard;
-        String[] judge = new String[2];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+2)<boardSize&&board[i][j+2]!="●"&&board[i][j+2]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -1420,15 +1155,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+1)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+2)<boardSize&&board[i+2][j]!="●"&&board[i+2][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -1440,15 +1170,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+1)<maxX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+2)<boardSize &&(j+2)<boardSize&&board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -1460,15 +1185,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-1)>0&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-1)>minX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-2)>=0&&(j+2)<boardSize &&board[i-2][j+2]!="●"&&board[i-2][j+2]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -1489,17 +1209,12 @@ public class BasicCal{
     public String basicPlayerAttack22s23(String[][] newboard){
         board=newboard;
         String[] judge = new String[2];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+2)<boardSize&&board[i][j+2]!="●"&&board[i][j+2]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -1511,15 +1226,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+1)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+2)<boardSize&&board[i+2][j]!="●"&&board[i+2][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -1531,15 +1241,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+1)<maxX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+2)<boardSize &&(j+2)<boardSize&&board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -1551,16 +1256,12 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-1)>0&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-1)>minX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
+
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-2)>=0&&(j+2)<boardSize &&board[i-2][j+2]!="●"&&board[i-2][j+2]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
                         {if((i+2)<boardSize &&(j-2)>=0&&(i-3)>=0&&(j+3)<boardSize &&board[i-3][j+3]!="○"&&board[i+2][j-2]!="○"){
@@ -1579,18 +1280,12 @@ public class BasicCal{
     */
     public String basicComputerAttack12s23(String[][] newboard){
         board=newboard;
-        String[] judge = new String[2];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+2)<boardSize&&board[i][j+2]!="●"&&board[i][j+2]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -1601,15 +1296,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+1)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+2)<boardSize&&board[i+2][j]!="●"&&board[i+2][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -1620,15 +1310,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+1)<maxX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+2)<boardSize &&(j+2)<boardSize&&board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -1639,15 +1324,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-1)>0&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-1)>minX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-2)>=0&&(j+2)<boardSize &&board[i-2][j+2]!="●"&&board[i-2][j+2]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -1666,18 +1346,12 @@ public class BasicCal{
     */
     public String basicPlayerAttack12s23(String[][] newboard){
         board=newboard;
-        String[] judge = new String[2];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+2)<boardSize&&board[i][j+2]!="●"&&board[i][j+2]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -1688,15 +1362,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+1)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+2)<boardSize&&board[i+2][j]!="●"&&board[i+2][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -1707,15 +1376,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+1)<boardSize&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+1)<maxX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+2)<boardSize &&(j+2)<boardSize&&board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -1726,15 +1390,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-1)>0&&(j+1)<boardSize){
-                    int s=0;
-                    for(int k=0; k<2;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-1)>minX&&(j+1)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<2;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-2)>=0&&(j+2)<boardSize &&board[i-2][j+2]!="●"&&board[i-2][j+2]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -1753,18 +1412,12 @@ public class BasicCal{
     */
     public String basicComputerAttack4s2(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((j+4)<boardSize&&(j-1)>=0&&board[i][j-1]!="●"&&board[i][j+4]!="●"&&board[i][j+1]!="●"&&board[i][j+2]!="●")
@@ -1777,15 +1430,10 @@ public class BasicCal{
                                     return i+" "+(j+2);}}}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+4)<boardSize&&board[i-1][j]!="●"&&board[i+4][j]!="●"&&board[i+1][j]!="●"&&board[i+2][j]!="●")
@@ -1798,15 +1446,10 @@ public class BasicCal{
                                     return (i+2)+" "+j;}}}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i+4)<boardSize &&(j+4)<boardSize&&(i-1)>=0&&(j-1)>=0&&board[i+4][j+4]!="●"&&board[i-1][j-1]!="●"&&board[i+1][j+1]!="●"&&board[i+2][j+2]!="●")
@@ -1819,15 +1462,10 @@ public class BasicCal{
                                     return (i+2)+" "+(j+2);}}}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize&&(j-1)>=0&&(i-4)>=0&&(j+4)<boardSize&&board[i+1][j-1]!="●"&&board[i-4][j+4]!="●"&&board[i-1][j+1]!="●"&&board[i-2][j+2]!="●")
@@ -1848,18 +1486,12 @@ public class BasicCal{
     */
     public String basicPlayerAttack4s2(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((j+4)<boardSize&&(j-1)>=0&&board[i][j-1]!="○"&&board[i][j+4]!="○"&&board[i][j+1]!="○"&&board[i][j+2]!="○")
@@ -1872,15 +1504,10 @@ public class BasicCal{
                                     return i+" "+(j+2);}}}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+4)<boardSize&&board[i-1][j]!="○"&&board[i+4][j]!="○"&&board[i+1][j]!="○"&&board[i+2][j]!="○")
@@ -1893,16 +1520,12 @@ public class BasicCal{
                                     return (i+2)+" "+j;}}}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
+
                     if(o==2){
                         if((i+4)<boardSize &&(j+4)<boardSize&&(i-1)>=0&&(j-1)>=0&&board[i+4][j+4]!="○"&&board[i-1][j-1]!="○"&&board[i+1][j+1]!="○"&&board[i+2][j+2]!="○")
                         {if(board[i][j]=="●"&&board[i+3][j+3]=="●"){
@@ -1914,15 +1537,10 @@ public class BasicCal{
                                     return (i+2)+" "+(j+2);}}}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize&&(j-1)>=0&&(i-4)>=0&&(j+4)<boardSize&&board[i+1][j-1]!="○"&&board[i-4][j+4]!="○"&&board[i-1][j+1]!="○"&&board[i-2][j+2]!="○")
@@ -1943,18 +1561,12 @@ public class BasicCal{
     */
     public String basicComputerAttack3s2(String[][] newboard){
         board=newboard;
-        String[] judge = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+2)<boardSize&&board[i][j+1]!="●"&&board[i][j+1]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+2)<maxY&&board[i][j+1]!="●"&&board[i][j+1]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+3)<boardSize&&board[i][j+3]!="●"&&board[i][j+3]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -1964,15 +1576,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize&&board[i+1][j]!="●"&&board[i+1][j]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+2)<maxX&&board[i+1][j]!="●"&&board[i+1][j]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+3)<boardSize&&board[i+3][j]!="●"&&board[i+3][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -1983,15 +1590,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize&&(j+2)<boardSize&&board[i+1][j+1]!="●"&&board[i+1][j+1]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+2)<maxX&&(j+2)<maxY&&board[i+1][j+1]!="●"&&board[i+1][j+1]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+3)<boardSize &&(j+3)<boardSize &&board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -2002,15 +1604,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>0&&(j+2)<boardSize&&board[i-1][j+1]!="●"&&board[i-1][j+1]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-2)>minX&&(j+2)<maxY&&board[i-1][j+1]!="●"&&board[i-1][j+1]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-3)>=0&&(j+3)<boardSize &&board[i-3][j+3]!="●"&&board[i-3][j+3]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -2029,18 +1626,12 @@ public class BasicCal{
     */
     public String basicPlayerAttack3s2(String[][] newboard){
         board=newboard;
-        String[] judge = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+2)<boardSize&&board[i][j+1]!="●"&&board[i][j+1]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+2)<maxY&&board[i][j+1]!="●"&&board[i][j+1]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((j-1)>=0&&(j+3)<boardSize&&board[i][j+3]!="●"&&board[i][j+3]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -2050,15 +1641,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize&&board[i+1][j]!="●"&&board[i+1][j]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+2)<maxX&&board[i+1][j]!="●"&&board[i+1][j]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(i+3)<boardSize&&board[i+3][j]!="●"&&board[i+3][j]!="○"&&board[i-1][j]!="●"&&board[i-1][j]!="○")
@@ -2069,15 +1655,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize&&(j+2)<boardSize&&board[i+1][j+1]!="●"&&board[i+1][j+1]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+2)<maxX&&(j+2)<maxY&&board[i+1][j+1]!="●"&&board[i+1][j+1]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i-1)>=0&&(j-1)>=0&&(i+3)<boardSize &&(j+3)<boardSize &&board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
@@ -2088,15 +1669,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>0&&(j+2)<boardSize&&board[i-1][j+1]!="●"&&board[i-1][j+1]!="○"){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-2)>minX&&(j+2)<maxY&&board[i-1][j+1]!="●"&&board[i-1][j+1]!="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==2){
                         if((i+1)<boardSize &&(j-1)>=0&&(i-3)>=0&&(j+3)<boardSize &&board[i-3][j+3]!="●"&&board[i-3][j+3]!="○"&&board[i+1][j-1]!="●"&&board[i+1][j-1]!="○")
@@ -2115,18 +1691,12 @@ public class BasicCal{
     */
     public String basicComputerAttack03s32(String[][] newboard){
         board=newboard;
-        String[] judge = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==3){
                         if((j+3)<boardSize&&board[i][j+3]!="●"&&board[i][j+3]!="○")
@@ -2137,15 +1707,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+2)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==3){
                         if((i+3)<boardSize&&board[i+3][j]!="●"&&board[i+3][j]!="○")
@@ -2157,15 +1722,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+2)<maxX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if((i+3)<boardSize &&(j+3)<boardSize &&board[i+3][j+3]!="●"&&board[i+3][j+3]!="○")
@@ -2177,15 +1737,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>0&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-2)>minX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]!="●"&&board[i-3][j+3]!="○")
@@ -2205,18 +1760,12 @@ public class BasicCal{
     */
     public String basicPlayerAttack03s32(String[][] newboard){
         board=newboard;
-        String[] judge = new String[3];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==3){
                         if((j+3)<boardSize&&board[i][j+3]!="●"&&board[i][j+3]!="○")
@@ -2227,15 +1776,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+2)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==3){
                         if((i+3)<boardSize&&board[i+3][j]!="●"&&board[i+3][j]!="○")
@@ -2247,15 +1791,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<boardSize&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+2)<maxX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==3){
                         if((i+3)<boardSize &&(j+3)<boardSize &&board[i+3][j+3]!="●"&&board[i+3][j+3]!="○")
@@ -2267,15 +1806,10 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>0&&(j+2)<boardSize){
-                    int s=0;
-                    for(int k=0; k<3;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-2)>minX&&(j+2)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<3;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==3){
                         if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]!="●"&&board[i-3][j+3]!="○")
@@ -2295,18 +1829,12 @@ public class BasicCal{
     */
     public String basicComputerAttack04s31(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==3){
                         if(((j-1)>=0&&board[i][j-1]!="●")||((j+4)<boardSize&&board[i][j+4]!="●"))
@@ -2314,15 +1842,10 @@ public class BasicCal{
                             if(board[i][j+2]!="●"&&board[i][j+2]!="○"){return i+" "+(j+2);}}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==3){
                         if(((i-1)>=0&&board[i-1][j]!="●")||((i+4)<boardSize&&board[i+4][j]!="●"))
@@ -2330,15 +1853,10 @@ public class BasicCal{
                             if(board[i+2][j]!="●"&&board[i+2][j]!="○"){return (i+2)+" "+j;}}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if(((i+4)<boardSize&&(j+4)<boardSize&&board[i+4][j+4]!="●")||((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="●"))
@@ -2346,15 +1864,10 @@ public class BasicCal{
                             if(board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"){return (i+2)+" "+(j+2);}}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if(((i+1)<boardSize&&(j-1)>=0&&board[i+1][j-1]!="●")||((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]!="●"))
@@ -2370,18 +1883,12 @@ public class BasicCal{
     */
     public String basicPlayerAttack04s31(String[][] newboard){
         board=newboard;
-        String[] judge = new String[4];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==3){
                         if(((j-1)>=0&&board[i][j-1]!="○")||((j+4)<boardSize&&board[i][j+4]!="○"))
@@ -2389,15 +1896,10 @@ public class BasicCal{
                             if(board[i][j+2]!="●"&&board[i][j+2]!="○"){return i+" "+(j+2);}}
                     }
                 }
-                if((i+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+3)<maxX){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==3){
                         if(((i-1)>=0&&board[i-1][j]!="○")||((i+4)<boardSize&&board[i+4][j]!="○"))
@@ -2405,15 +1907,10 @@ public class BasicCal{
                             if(board[i+2][j]!="●"&&board[i+2][j]!="○"){return (i+2)+" "+j;}}
                     }
                 }
-                if((i+3)<boardSize&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+3)<maxX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==3){
                         if(((i+4)<boardSize&&(j+4)<boardSize&&board[i+4][j+4]!="○")||((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="○"))
@@ -2421,16 +1918,12 @@ public class BasicCal{
                             if(board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"){return (i+2)+" "+(j+2);}}
                     }
                 }
-                if((i-3)>0&&(j+3)<boardSize){
-                    int s=0;
-                    for(int k=0; k<4;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-3)>minX&&(j+3)<maxY){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<4;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
+
                     if(o==3){
                         if(((i+1)<boardSize&&(j-1)>=0&&board[i+1][j-1]!="○")||((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]!="○"))
                         {if(board[i-1][j+1]!="●"&&board[i-1][j+1]!="○"){return (i-1)+" "+(j+1);}
@@ -2445,18 +1938,12 @@ public class BasicCal{
     */
     public String basicComputerAttack05s30(String[][] newboard){
         board=newboard;
-        String[] judge = new String[5];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+4)<boardSize&&board[i][j]=="○"&&board[i][j+4]=="○"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+4)<maxY&&board[i][j]=="○"&&board[i][j+4]=="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i][j+k]=="○")o++;
                     }
                     if(o==3){
                         if(board[i][j+1]!="●"&&board[i][j+2]!="●"&&board[i][j+3]!="●")
@@ -2465,15 +1952,10 @@ public class BasicCal{
                             if(board[i][j+3]!="○"){return i+" "+(j+3);}}
                     }
                 }
-                if((i+4)<boardSize&&board[i][j]=="○"&&board[i+4][j]=="○"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+4)<maxX&&board[i][j]=="○"&&board[i+4][j]=="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j]=="○")o++;
                     }
                     if(o==3){
                         if(board[i+1][j]!="●"&&board[i+2][j]!="●"&&board[i+3][j]!="●")
@@ -2482,15 +1964,10 @@ public class BasicCal{
                             if(board[i+3][j]!="○"){return (i+3)+" "+j;}}
                     }
                 }
-                if((i+4)<boardSize&&(j+4)<boardSize&&board[i][j]=="○"&&board[i+4][j+4]=="○"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+4)<maxX&&(j+4)<maxY&&board[i][j]=="○"&&board[i+4][j+4]=="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if(board[i+1][j+1]!="●"&&board[i+2][j+2]!="●"&&board[i+3][j+3]!="●")
@@ -2499,15 +1976,10 @@ public class BasicCal{
                             if(board[i+3][j+3]!="○"){return (i+3)+" "+(j+3);}}
                     }
                 }
-                if((i-4)>0&&(j+4)<boardSize&&board[i][j]=="○"&&board[i-4][j+4]=="○"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-4)>minX&&(j+4)<maxY&&board[i][j]=="○"&&board[i-4][j+4]=="○"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="○")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i-k][j+k]=="○")o++;
                     }
                     if(o==3){
                         if(board[i-1][j+1]!="●"&&board[i-2][j+2]!="●"&&board[i-3][j+3]!="●")
@@ -2524,18 +1996,12 @@ public class BasicCal{
     */
     public String basicPlayerAttack05s30(String[][] newboard){
         board=newboard;
-        String[] judge = new String[5];
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-                if((j+4)<boardSize&&board[i][j]=="●"&&board[i][j+4]=="●"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i][j+s];
-                        s++;
-                    }
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
+                if((j+4)<maxY&&board[i][j]=="●"&&board[i][j+4]=="●"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i][j+k]=="●")o++;
                     }
                     if(o==3){
                         if(board[i][j+1]!="○"&&board[i][j+2]!="○"&&board[i][j+3]!="○")
@@ -2544,15 +2010,10 @@ public class BasicCal{
                             if(board[i][j+3]!="●"){return i+" "+(j+3);}}
                     }
                 }
-                if((i+4)<boardSize&&board[i][j]=="●"&&board[i+4][j]=="●"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j];
-                        s++;
-                    }
+                if((i+4)<maxX&&board[i][j]=="●"&&board[i+4][j]=="●"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j]=="●")o++;
                     }
                     if(o==3){
                         if(board[i+1][j]!="○"&&board[i+2][j]!="○"&&board[i+3][j]!="○")
@@ -2561,15 +2022,10 @@ public class BasicCal{
                             if(board[i+3][j]!="●"){return (i+3)+" "+j;}}
                     }
                 }
-                if((i+4)<boardSize&&(j+4)<boardSize&&board[i][j]=="●"&&board[i+4][j+4]=="●"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i+s][j+s];
-                        s++;
-                    }
+                if((i+4)<maxX&&(j+4)<maxY&&board[i][j]=="●"&&board[i+4][j+4]=="●"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i+k][j+k]=="●")o++;
                     }
                     if(o==3){
                         if(board[i+1][j+1]!="○"&&board[i+2][j+2]!="○"&&board[i+3][j+3]!="○")
@@ -2578,15 +2034,10 @@ public class BasicCal{
                             if(board[i+3][j+3]!="●"){return (i+3)+" "+(j+3);}}
                     }
                 }
-                if((i-4)>0&&(j+4)<boardSize&&board[i][j]=="●"&&board[i-4][j+4]=="●"){
-                    int s=0;
-                    for(int k=0; k<5;k++){
-                        judge[k]=board[i-s][j+s];
-                        s++;
-                    }
+                if((i-4)>minX&&(j+4)<maxY&&board[i][j]=="●"&&board[i-4][j+4]=="●"){
                     int o=0;
-                    for(String jud:judge){
-                        if(jud=="●")o++;
+                    for(int k=0; k<5;k++){
+                        if(board[i-k][j+k]=="●")o++;
                     }
                     if(o==3){
                         if(board[i-1][j+1]!="○"&&board[i-2][j+2]!="○"&&board[i-3][j+3]!="○")
@@ -2604,9 +2055,8 @@ public class BasicCal{
     */
     public String basicComputerAttack31s13(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
-
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
                 if((j-3)>=0&&(j+3)<boardSize&&board[i][j]=="○"){
                     if(board[i][j+1]!="●"&&board[i][j+1]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
                     {if(board[i][j+2]!="●"&&board[i][j-2]!="●")
@@ -2631,7 +2081,7 @@ public class BasicCal{
                                 return (i-1)+" "+j;
                         }}
                     }}}
-                if((i-3)>=0&&(j-3)>=0&&(j+3)<boardSize&&(i+3)<boardSize&&board[i][j]=="○"){
+                if((i-3)>=0&(j-3)>=0&(j+3)<boardSize&&(i+3)<boardSize&&board[i][j]=="○"){
                     if(board[i+1][j+1]!="●"&&board[i+1][j+1]!="○"&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○")
                     {if(board[i+2][j+2]!="●"&&board[i-2][j-2]!="●")
                     {if(board[i+3][j+3]!="●"&&board[i-3][j-3]!="●"){
@@ -2663,8 +2113,8 @@ public class BasicCal{
     */
     public String basicPlayerAttack31s13(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
                 int ran = (int)(Math.random()*4);
                 switch(ran){
                     case 0:
@@ -2728,8 +2178,8 @@ public class BasicCal{
     */
     public String basicComputerAttack21s13(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
 
                 if((j-2)>=0&&(j+2)<boardSize&&board[i][j]=="○"){
                     if(board[i][j+1]!="●"&&board[i][j+1]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -2772,8 +2222,8 @@ public class BasicCal{
     */
     public String basicComputerAttack11s13(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
 
                 if((j-2)>=0&&(j+2)<boardSize&&board[i][j]=="○"){
                     if(board[i][j+1]!="●"&&board[i][j+1]!="○"&&board[i][j-1]!="●"&&board[i][j-1]!="○")
@@ -2812,8 +2262,8 @@ public class BasicCal{
     */
     public String basicComputerAttack11s11(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
 
                 if(board[i][j]=="○"){
                     if((j+1)<boardSize&&board[i][j+1]!="●"&&board[i][j+1]!="○")
@@ -2848,8 +2298,8 @@ public class BasicCal{
     */
     public String basicPlayerAttack11s11(String[][] newboard){
         board=newboard;
-        for(int i=0; i<boardSize; i++){
-            for(int j=0; j<boardSize;j++){
+        for(int i=minX; i<maxX; i++){
+            for(int j=minY; j<maxY;j++){
 
                 if(board[i][j]=="●"){
                     if((j+1)<boardSize&&board[i][j+1]!="●"&&board[i][j+1]!="○")

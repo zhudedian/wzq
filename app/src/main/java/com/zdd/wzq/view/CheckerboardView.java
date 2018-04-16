@@ -28,12 +28,14 @@ public class CheckerboardView extends ViewGroup {
     private Paint mPaint;
     private MainActivity mainActivity;
     private Gobang gobang;
+    private CheckerPieceView lastPiece;
     private int strokeWidth = 5;
     private float scale = 0.8f;
     private int gridNumX,gridNumY;
     private float intervalX,intervalY;
     private int width,height;
     private float padding;
+    private boolean isStart,isEnded;
     private CheckerPieceView[][] pieceViews = new CheckerPieceView[15][15];
     private int paddingLeft,paddingRight,paddingTop,paddingBottom;
 
@@ -80,11 +82,21 @@ public class CheckerboardView extends ViewGroup {
             @Override
             public void result(int x, int y) {
                 pieceViews[x][y].setColor(Color.BLACK);
+                pieceViews[x][y].addStar();
+                if (lastPiece!=null){
+                    lastPiece.removeStar();
+                    lastPiece = pieceViews[x][y];
+                }else {
+                    lastPiece = pieceViews[x][y];
+                }
+                isStart = true;
             }
 
             @Override
             public void end(String info) {
+                isEnded = true;
                 mainActivity.setText(info);
+                ((MainActivity)getContext()).restart.setVisibility(VISIBLE);
             }
         });
 
@@ -184,10 +196,10 @@ public class CheckerboardView extends ViewGroup {
     }
     private void initview() {
 
-        for (int i = 0;i<15;i++) {
-            for (int j = 0;j<15;j++) {
+        for (int j = 1;j<=15;j++) {
+            for (int i = 1;i<=15;i++) {
                 final CheckerPieceView view = new CheckerPieceView(getContext(),i,j);
-                pieceViews[i][j]=view;
+                pieceViews[i-1][j-1]=view;
                 addView(view);
                 LinearLayout.LayoutParams params =
                         new android.widget.LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -198,17 +210,40 @@ public class CheckerboardView extends ViewGroup {
                     @Override
                     public void onClick(View v) {
                         Log.i(TAG,"x="+view.getCoX()+"y="+view.getCoY());
-                        if (gobang.setAPiece(view.getCoX(),view.getCoY())) {
-                            view.setColor(Color.WHITE);
-
-                            gobang.play();
+                        if (isStart&&!isEnded) {
+                            if (gobang.setAPiece(view.getCoX(), view.getCoY())) {
+                                isStart = false;
+                                view.setColor(Color.WHITE);
+                                view.addStar();
+                                if (lastPiece!=null){
+                                    lastPiece.removeStar();
+                                    lastPiece = view;
+                                }else {
+                                    lastPiece = view;
+                                }
+                                gobang.play();
+                            }
                         }
                     }
                 });
             }
 
         }
+        isStart = true;
+        isEnded = false;
         Log.i(TAG,"initview");
     }
 
+    public void reStart(){
+        lastPiece.removeStar();
+        for (int j = 1;j<=15;j++) {
+            for (int i = 1; i <= 15; i++) {
+                pieceViews[i-1][j-1].setColor(0);
+                pieceViews[i - 1][j - 1].postInvalidate();
+            }
+        }
+        gobang.initBoard();
+        isStart = true;
+        isEnded = false;
+    }
 }
