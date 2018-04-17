@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.os.Message;
 
 import java.lang.Math;
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 import android.os.Handler;
@@ -17,9 +18,11 @@ public class Gobang{
     static int judgeWhetherGo = 0;
     private int playerPiece = 0;
     private ComputerPieceListener listener;
+    private History history;
 
     public Gobang(ComputerPieceListener listener){
         this.listener = listener;
+        history = new History();
         initBoard();
         printBoard();
     }
@@ -77,6 +80,7 @@ public class Gobang{
         if(x<=15&&y<=15){
             if(board[x-1][y-1]!="●"&&board[x-1][y-1]!="○"){
                 board[x-1][y-1]="●";
+                history.write(x-1,y-1,"●");
                 return true;
             }
         }
@@ -260,7 +264,9 @@ public class Gobang{
 /*
 *特殊算法---二-----
 */
+
             Log.i("Gobang","特殊算法---二-----");
+            boolean weatherMoreCalcul= false;
             Calculate calculate = new Calculate();
             for(int i=0; i<boardSize; i++){
                 for(int j=0; j<boardSize;j++){
@@ -274,9 +280,13 @@ public class Gobang{
                         if(computerWin==1){
                             board[i][j]="☆";
                             sendData(i, j);
-                            return;}
-
+                            return;
+                        }
+                        if (computerWin==2){
+                            weatherMoreCalcul = true;
+                        }
                     }}}
+            Log.i("Gobang","demoComputer2");
             int times = 0;
             for(int i=0; i<boardSize; i++){
                 for(int j=0; j<boardSize;j++){
@@ -288,10 +298,14 @@ public class Gobang{
                             }}
                         int playerWin=calculate.demoPlayer2(board2,i,j);
                         if(playerWin==0)times++;
+                        if (playerWin==2){
+                            times++;
+                            weatherMoreCalcul = true;
+                        }
                     }
-                    if (times>=3)break;
+                    if (times>=3&&weatherMoreCalcul)break;
                 }
-                if (times>=3)break;
+                if (times>=3&&weatherMoreCalcul)break;
             }
             Log.i("Gobang","times="+times);
             if((times<3)&&(times>0)){
@@ -310,442 +324,587 @@ public class Gobang{
                                 return;
                             }
                         }}}}
-            Log.i("Gobang","特殊算法---三-----");
+
 /*
 *特殊算法---三-----
 */
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang","特殊算法---三-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer3(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;}
-
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer3(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            Log.i("Gobang","times="+times);
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer3(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int computerWin = calculate.demoComputer3(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
-                        }}}}
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer3(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3&&weatherMoreCalcul) break;
+                    }
+                    if (times >= 3&&weatherMoreCalcul) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer3(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
 /*
 *特殊算法----四----
 */
-            Log.i("Gobang","特殊算法---四-----");
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang", "特殊算法---四-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer4(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;
-                        }
-
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer4(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            Log.i("Gobang","times="+times);
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer4(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int computerWin = calculate.demoComputer4(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer4(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3&&weatherMoreCalcul) break;
+                    }
+                    if (times >= 3&&weatherMoreCalcul) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer4(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
 
 
-                        }}}}
+                            }
+                        }
+                    }
+                }
+            }
 /*
 *特殊算法----五----
 */
-            Log.i("Gobang","特殊算法---五-----");
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang", "特殊算法---五-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer5(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;
-                        }
-
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer5(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            Log.i("Gobang","times="+times);
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer5(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int computerWin = calculate.demoComputer5(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer5(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3&&weatherMoreCalcul) break;
+                    }
+                    if (times >= 3&&weatherMoreCalcul) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer5(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
 
 
-                        }}}}
+                            }
+                        }
+                    }
+                }
+            }
 /*
 *特殊算法----六----
 */
-            Log.i("Gobang","特殊算法---六-----");
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang", "特殊算法---六-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer6(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;
-                        }
-
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer6(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            Log.i("Gobang","times="+times);
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer6(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int computerWin = calculate.demoComputer6(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer6(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3&&weatherMoreCalcul) break;
+                    }
+                    if (times >= 3&&weatherMoreCalcul) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer6(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
 
 
-                        }}}}
+                            }
+                        }
+                    }
+                }
+            }
 /*
 *特殊算法----七----
 */
-            Log.i("Gobang","特殊算法---七-----");
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang", "特殊算法---七-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer7(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;
-                        }
-
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer7(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            Log.i("Gobang","times="+times);
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer7(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int computerWin = calculate.demoComputer7(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer7(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3&&weatherMoreCalcul) break;
+                    }
+                    if (times >= 3&&weatherMoreCalcul) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer7(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
 
 
-                        }}}}
+                            }
+                        }
+                    }
+                }
+            }
 /*
 *特殊算法----八----
 */
-            Log.i("Gobang","特殊算法---八-----");
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang", "特殊算法---八-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer8(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;
-                        }
-
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer8(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            Log.i("Gobang","times="+times);
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer8(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int computerWin = calculate.demoComputer8(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer8(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3&&weatherMoreCalcul) break;
+                    }
+                    if (times >= 3&&weatherMoreCalcul) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer8(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
 
 
-                        }}}}
+                            }
+                        }
+                    }
+                }
+            }
 /*
 *特殊算法----九----
 */
-            Log.i("Gobang","特殊算法---九-----");
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang", "特殊算法---九-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer9(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;
-                        }
-
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
                             }
-                        }
-                        int playerWin=calculate.demoPlayer9(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            Log.i("Gobang","times="+times);
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer9(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            int computerWin = calculate.demoComputer9(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer9(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3&&weatherMoreCalcul) break;
+                    }
+                    if (times >= 3&&weatherMoreCalcul) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer9(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
 
 
-                        }}}}
+                            }
+                        }
+                    }
+                }
+            }
 /*
 *特殊算法----十----
 */
-            Log.i("Gobang","特殊算法---十-----");
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
+            if (weatherMoreCalcul) {
+                weatherMoreCalcul = false;
+                Log.i("Gobang", "特殊算法---十-----");
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
 
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){     //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int computerWin=calculate.demoComputer10(board2,i,j);
-                        if(computerWin==1){
-                            board[i][j]="☆";
-                            sendData(i, j);
-                            return;
-                        }
-                    }}}
-            times = 0;
-            for(int i=0; i<boardSize; i++){
-                for(int j=0; j<boardSize;j++){
-                    if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                        for(int m=0; m<boardSize; m++){
-                            for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                board2[m][n]=board[m][n];
-                            }}
-                        int playerWin=calculate.demoPlayer10(board2,i,j);
-                        if(playerWin==0)times++;
-                    }
-                    if (times>=3)break;
-                }
-                if (times>=3)break;
-            }
-            if((times<3)&&(times>0)){
-                for(int i=0; i<boardSize; i++){
-                    for(int j=0; j<boardSize;j++){
-                        if(board[i][j]!="○"&&board[i][j]!="●"){
-
-                            for(int m=0; m<boardSize; m++){
-                                for(int n=0; n<boardSize;n++){      //把游戏棋盘复制给推算盘
-                                    board2[m][n]=board[m][n];
-                                }}
-                            int playerWin=calculate.demoPlayer10(board2,i,j);
-                            if(playerWin==0){
-                                board[i][j]="☆";
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {     //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int computerWin = calculate.demoComputer10(board2, i, j);
+                            if (computerWin == 1) {
+                                board[i][j] = "☆";
                                 sendData(i, j);
                                 return;
                             }
+                            if (computerWin==2){
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                    }
+                }
+                times = 0;
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        if (board[i][j] != "○" && board[i][j] != "●") {
+
+                            for (int m = 0; m < boardSize; m++) {
+                                for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                    board2[m][n] = board[m][n];
+                                }
+                            }
+                            int playerWin = calculate.demoPlayer10(board2, i, j);
+                            if (playerWin == 0) times++;
+                            if (playerWin==2){
+                                times++;
+                                weatherMoreCalcul = true;
+                            }
+                        }
+                        if (times >= 3) break;
+                    }
+                    if (times >= 3) break;
+                }
+                Log.i("Gobang", "times=" + times);
+                if ((times < 3) && (times > 0)) {
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            if (board[i][j] != "○" && board[i][j] != "●") {
+
+                                for (int m = 0; m < boardSize; m++) {
+                                    for (int n = 0; n < boardSize; n++) {      //把游戏棋盘复制给推算盘
+                                        board2[m][n] = board[m][n];
+                                    }
+                                }
+                                int playerWin = calculate.demoPlayer10(board2, i, j);
+                                if (playerWin == 0) {
+                                    board[i][j] = "☆";
+                                    sendData(i, j);
+                                    return;
+                                }
 
 
-                        }}}}
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -1143,7 +1302,22 @@ public class Gobang{
         }
     }
 
-
+    public List<History.Step> forward(){
+        List<History.Step> steps = history.getForwardList();
+        initBoard();
+        for (History.Step step:steps){
+            board[step.x][step.y] = step.piece;
+        }
+        return steps;
+    }
+    public List<History.Step> next(){
+        List<History.Step> steps = history.getNextList();
+        initBoard();
+        for (History.Step step:steps){
+            board[step.x][step.y] = step.piece;
+        }
+        return steps;
+    }
     public void setListener(ComputerPieceListener listener) {
         this.listener = listener;
     }
@@ -1247,6 +1421,7 @@ public class Gobang{
                     int cosX = bundle.getInt("cosX");
                     int cosY = bundle.getInt("cosY");
                     if (listener!=null){
+                        history.write(cosX,cosY,"○");
                         listener.result(cosX,cosY);
                     }
                     break;

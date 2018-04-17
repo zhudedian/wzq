@@ -18,6 +18,9 @@ import com.zdd.wzq.MainActivity;
 import com.zdd.wzq.R;
 import com.zdd.wzq.Util.DpUtil;
 import com.zdd.wzq.gobang.Gobang;
+import com.zdd.wzq.gobang.History;
+
+import java.util.List;
 
 /**
  * Created by yd on 2018/4/12.
@@ -245,5 +248,57 @@ public class CheckerboardView extends ViewGroup {
         gobang.initBoard();
         isStart = true;
         isEnded = false;
+    }
+    public void forward(){
+        if (!isStart){
+            return;
+        }
+        List<History.Step> steps = gobang.forward();
+        lastPiece.removeStar();
+        for (int j = 1;j<=15;j++) {
+            for (int i = 1; i <= 15; i++) {
+                pieceViews[i-1][j-1].setColor(0);
+                pieceViews[i - 1][j - 1].postInvalidate();
+            }
+        }
+        for (int i = 0;i<steps.size();i++){
+            History.Step step = steps.get(i);
+            CheckerPieceView view = pieceViews[step.x][step.y];
+            if (step.piece=="○"){
+                view.setColor(Color.BLACK);
+            }else {
+                view.setColor(Color.WHITE);
+            }
+            if (i==steps.size()-1){
+                view.addStar();
+                lastPiece = view;
+            }
+        }
+    }
+    public void next(){
+        if (!isStart){
+            return;
+        }
+        List<History.Step> steps = gobang.next();
+        lastPiece.removeStar();
+        for (int j = 1;j<=15;j++) {
+            for (int i = 1; i <= 15; i++) {
+                pieceViews[i-1][j-1].setColor(0);
+                pieceViews[i - 1][j - 1].postInvalidate();
+            }
+        }
+        for (int i = 0;i<steps.size();i++){
+            History.Step step = steps.get(i);
+            CheckerPieceView view = pieceViews[step.x][step.y];
+            if (step.piece=="○"){
+                view.setColor(Color.BLACK);
+            }else {
+                view.setColor(Color.WHITE);
+            }
+            if (i==steps.size()-1){
+                view.addStar();
+                lastPiece = view;
+            }
+        }
     }
 }

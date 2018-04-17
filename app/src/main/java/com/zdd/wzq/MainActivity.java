@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
     private CheckerboardView checkerboardView;
-    public Button restart;
+    public Button restart,forward,next;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.text);
         checkerboardView = (CheckerboardView)findViewById(R.id.checker_board);
         restart = (Button)findViewById(R.id.restart);
+        forward = (Button)findViewById(R.id.forward);
+        next = (Button)findViewById(R.id.next);
 
         restart.setVisibility(View.GONE);
         restart.setOnClickListener(new View.OnClickListener() {
@@ -33,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
                 checkerboardView.reStart();
                 restart.setVisibility(View.GONE);
                 textView.setText("");
+            }
+        });
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkerboardView.forward();
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkerboardView.next();
             }
         });
     }

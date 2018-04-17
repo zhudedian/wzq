@@ -26,7 +26,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+3)<maxY){
+                if((j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i][j+k]=="○")o++;
@@ -36,7 +36,7 @@ public class BasicCal{
                         else if((j-1)>=0&&board[i][j-1]!="●"&&board[i][j-1]!="○"){return i+" "+(j-1);}
                     }
                 }
-                if((i+3)<maxX){
+                if((i+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j]=="○")o++;
@@ -46,7 +46,7 @@ public class BasicCal{
                         else if((i-1)>=0&&board[i-1][j]!="●"&&board[i-1][j]!="○"){return (i-1)+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(j+3)<maxY){
+                if((i+3)<boardSize&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j+k]=="○")o++;
@@ -56,7 +56,7 @@ public class BasicCal{
                         else if((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○"){return (i-1)+" "+(j-1);}
                     }
                 }
-                if((i-3)>minX&&(j+3)<maxY){
+                if((i-3)>0&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i-k][j+k]=="○")o++;
@@ -77,7 +77,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+3)<maxY){
+                if((j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i][j+k]=="●")o++;
@@ -87,7 +87,7 @@ public class BasicCal{
                         else if((j-1)>=0&&board[i][j-1]!="●"&&board[i][j-1]!="○"){return i+" "+(j-1);}
                     }
                 }
-                if((i+3)<maxX){
+                if((i+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j]=="●")o++;
@@ -97,7 +97,7 @@ public class BasicCal{
                         else if((i-1)>=0&&board[i-1][j]!="●"&&board[i-1][j]!="○"){return (i-1)+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(j+3)<maxY){
+                if((i+3)<boardSize&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j+k]=="●")o++;
@@ -107,7 +107,7 @@ public class BasicCal{
                         else if((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="●"&&board[i-1][j-1]!="○"){return (i-1)+" "+(j-1);}
                     }
                 }
-                if((i-3)>minX&&(j+3)<maxY){
+                if((i-3)>0&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i-k][j+k]=="●")o++;
@@ -127,7 +127,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+4)<maxY){
+                if((j+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i][j+k]=="○")o++;
@@ -140,7 +140,7 @@ public class BasicCal{
                         if(board[i][j+3]!="●"&&board[i][j+3]!="○"){return i+" "+(j+3);}
                     }
                 }
-                if((i+4)<maxX){
+                if((i+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i+k][j]=="○")o++;
@@ -152,7 +152,7 @@ public class BasicCal{
                         if(board[i+3][j]!="●"&&board[i+3][j]!="○"){return (i+3)+" "+j;}
                     }
                 }
-                if((i+4)<maxX&&(j+4)<maxY){
+                if((i+4)<boardSize&&(j+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i+k][j+k]=="○")o++;
@@ -164,7 +164,7 @@ public class BasicCal{
                         if(board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"){return (i+3)+" "+(j+3);}
                     }
                 }
-                if((i-4)>minX&&(j+4)<maxY){
+                if((i-4)>0&&(j+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i-k][j+k]=="○")o++;
@@ -186,7 +186,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+4)<maxY){
+                if((j+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i][j+k]=="●")o++;
@@ -198,7 +198,7 @@ public class BasicCal{
                         if(board[i][j+3]!="●"&&board[i][j+3]!="○"){return i+" "+(j+3);}
                     }
                 }
-                if((i+4)<maxX){
+                if((i+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i+k][j]=="●")o++;
@@ -210,7 +210,7 @@ public class BasicCal{
                         if(board[i+3][j]!="●"&&board[i+3][j]!="○"){return (i+3)+" "+j;}
                     }
                 }
-                if((i+4)<maxX&&(j+4)<maxY){
+                if((i+4)<boardSize&&(j+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i+k][j+k]=="●")o++;
@@ -222,7 +222,7 @@ public class BasicCal{
                         if(board[i+3][j+3]!="●"&&board[i+3][j+3]!="○"){return (i+3)+" "+(j+3);}
                     }
                 }
-                if((i-4)>minX&&(j+4)<maxY){
+                if((i-4)>0&&(j+4)<boardSize){
                     int o=0;
                     for(int k=0; k<5;k++){
                         if(board[i-k][j+k]=="●")o++;
@@ -244,7 +244,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+3)<maxY){
+                if((j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i][j+k]=="○")o++;
@@ -256,7 +256,7 @@ public class BasicCal{
                             if(board[i][j+2]!="●"&&board[i][j+2]!="○"){return i+" "+(j+2);}}
                     }
                 }
-                if((i+3)<maxX){
+                if((i+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j]=="○")o++;
@@ -268,7 +268,7 @@ public class BasicCal{
                             if(board[i+2][j]!="●"&&board[i+2][j]!="○"){return (i+2)+" "+j;}}
                     }
                 }
-                if((i+3)<maxX&&(j+3)<maxY){
+                if((i+3)<boardSize&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j+k]=="○")o++;
@@ -280,7 +280,7 @@ public class BasicCal{
                             if(board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"){return (i+2)+" "+(j+2);}}
                     }
                 }
-                if((i-3)>minX&&(j+3)<maxY){
+                if((i-3)>0&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i-k][j+k]=="○")o++;
@@ -302,7 +302,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+3)<maxY){
+                if((j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i][j+k]=="●")o++;
@@ -314,7 +314,7 @@ public class BasicCal{
                             if(board[i][j+2]!="●"&&board[i][j+2]!="○"){return i+" "+(j+2);}}
                     }
                 }
-                if((i+3)<maxX){
+                if((i+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j]=="●")o++;
@@ -326,7 +326,7 @@ public class BasicCal{
                             if(board[i+2][j]!="●"&&board[i+2][j]!="○"){return (i+2)+" "+j;}}
                     }
                 }
-                if((i+3)<maxX&&(j+3)<maxY){
+                if((i+3)<boardSize&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i+k][j+k]=="●")o++;
@@ -338,7 +338,7 @@ public class BasicCal{
                             if(board[i+2][j+2]!="●"&&board[i+2][j+2]!="○"){return (i+2)+" "+(j+2);}}
                     }
                 }
-                if((i-3)>minX&&(j+3)<maxY){
+                if((i-3)>0&&(j+3)<boardSize){
                     int o=0;
                     for(int k=0; k<4;k++){
                         if(board[i-k][j+k]=="●")o++;
@@ -360,25 +360,25 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<minY;j++){
-                if((j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i][j+3]=="○"&&board[i][j+1]=="○"&&board[i][j-1]=="○"&&board[i][j-3]=="○")
                     {if(board[i][j+2]!="●"&&board[i][j-2]!="●")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(i-3)>=minX&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<boardSize&&(i-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j]=="○"&&board[i+1][j]=="○"&&board[i-1][j]=="○"&&board[i-3][j]=="○")
                     {if(board[i+2][j]!="●"&&board[i-2][j]!="●")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j+3]=="○"&&board[i+1][j+1]=="○"&&board[i-1][j-1]=="○"&&board[i-3][j-3]=="○")
                     {if(board[i+2][j+2]!="●"&&board[i-2][j-2]!="●")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i-3][j+3]=="○"&&board[i-1][j+1]=="○"&&board[i+1][j-1]=="○"&&board[i+3][j-3]=="○")
                     {if(board[i-2][j+2]!="●"&&board[i+2][j-2]!="●")
                     {return i+" "+j;}
@@ -394,25 +394,25 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i][j+3]=="●"&&board[i][j+1]=="●"&&board[i][j-1]=="●"&&board[i][j-3]=="●")
                     {if(board[i][j+2]!="○"&&board[i][j-2]!="○")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(i-3)>=minX&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<boardSize&&(i-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j]=="●"&&board[i+1][j]=="●"&&board[i-1][j]=="●"&&board[i-3][j]=="●")
                     {if(board[i+2][j]!="○"&&board[i-2][j]!="○")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i+3][j+3]=="●"&&board[i+1][j+1]=="●"&&board[i-1][j-1]=="●"&&board[i-3][j-3]=="●")
                     {if(board[i+2][j+2]!="○"&&board[i-2][j-2]!="○")
                     {return i+" "+j;}
                     }
                 }
-                if((i+3)<maxX&&(i-3)>=minX&&(j+3)<maxY&&(j-3)>=minY&&board[i][j]!="●"&&board[i][j]!="○"){
+                if((i+3)<boardSize&&(i-3)>=0&&(j+3)<boardSize&&(j-3)>=0&&board[i][j]!="●"&&board[i][j]!="○"){
                     if(board[i-3][j+3]=="●"&&board[i-1][j+1]=="●"&&board[i+1][j-1]=="●"&&board[i+3][j-3]=="●")
                     {if(board[i-2][j+2]!="○"&&board[i+2][j-2]!="○")
                     {return i+" "+j;}
@@ -532,85 +532,85 @@ public class BasicCal{
                 if(board[i][j]!="●"&&board[i][j]!="○"){
                     int line=0;
                     //-----------1------------
-                    if((j+3)<maxY&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j+3]=="●"){
+                    if((j+3)<boardSize&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j+3]=="●"){
                         if((j+4)<boardSize&&board[i][j+4]!="○")line++;
                         else if((j-1)>=0&&board[i][j-1]!="○")line++;
 
                     }
-                    if((j-1)>=minY&&(j+2)<maxY&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j-1]=="●"){
+                    if((j-1)>=0&&(j+2)<boardSize&&board[i][j+1]=="●"&&board[i][j+2]=="●"&&board[i][j-1]=="●"){
                         if((j+3)<boardSize&&board[i][j+3]!="○")line++;
                         else if((j-2)>=0&&board[i][j-2]!="○")line++;
 
                     }
-                    if((j-2)>=minY&&(j+1)<maxY&&board[i][j+1]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
+                    if((j-2)>=0&&(j+1)<boardSize&&board[i][j+1]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
                         if((j+2)<boardSize&&board[i][j+2]!="○")line++;
                         else if((j-3)>=0&&board[i][j-3]!="○")line++;
 
                     }
-                    if((j-3)>=minY&&board[i][j-3]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
+                    if((j-3)>=0&&board[i][j-3]=="●"&&board[i][j-2]=="●"&&board[i][j-1]=="●"){
                         if((j+1)<boardSize&&board[i][j+1]!="○")line++;
                         else if((j-4)>=0&&board[i][j-4]!="○")line++;
 
                     }
                     //------------2-----------
-                    if((i+3)<maxX&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i+3][j]=="●"){
+                    if((i+3)<boardSize&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i+3][j]=="●"){
                         if((i+4)<boardSize&&board[i+4][j]!="○")line++;
                         else if((i-1)>=0&&board[i-1][j]!="○")line++;
 
                     }
-                    if((i-1)>=minX&&(i+2)<maxX&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i-1][j]=="●"){
+                    if((i-1)>=0&&(i+2)<boardSize&&board[i+1][j]=="●"&&board[i+2][j]=="●"&&board[i-1][j]=="●"){
                         if((i+3)<boardSize&&board[i+3][j]!="○")line++;
                         else if((i-2)>=0&&board[i-2][j]!="○")line++;
 
                     }
-                    if((i-2)>=minX&&(i+1)<maxX&&board[i+1][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
+                    if((i-2)>=0&&(i+1)<boardSize&&board[i+1][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
                         if((i+2)<boardSize&&board[i+2][j]!="○")line++;
                         else if((i-3)>=0&&board[i-3][j]!="○")line++;
 
                     }
-                    if((i-3)>=minX&&board[i-3][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
+                    if((i-3)>=0&&board[i-3][j]=="●"&&board[i-2][j]=="●"&&board[i-1][j]=="●"){
                         if((i+1)<boardSize&&board[i+1][j]!="○")line++;
                         else if((i-4)>=0&&board[i-4][j]!="○")line++;
 
                     }
                     //------------3-----------
-                    if((i+3)<maxX&&(j+3)<maxY&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i+3][j+3]=="●"){
+                    if((i+3)<boardSize&&(j+3)<boardSize&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i+3][j+3]=="●"){
                         if((i+4)<boardSize&&(j+4)<boardSize&&board[i+4][j+4]!="○")line++;
                         else if((i-1)>=0&&(j-1)>=0&&board[i-1][j-1]!="○")line++;
 
                     }
-                    if((i-1)>=minX&&(i+2)<maxX&&(j-1)>=minY&&(j+2)<maxY&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i-1][j-1]=="●"){
+                    if((i-1)>=0&&(i+2)<boardSize&&(j-1)>=minY&&(j+2)<maxY&&board[i+1][j+1]=="●"&&board[i+2][j+2]=="●"&&board[i-1][j-1]=="●"){
                         if((i+3)<boardSize&&(j+3)<boardSize&&board[i+3][j+3]!="○")line++;
                         else if((i-2)>=0&&(j-2)>=0&&board[i-2][j-2]!="○")line++;
 
                     }
-                    if((i-2)>=minX&&(i+1)<maxX&&(j-2)>=minY&&(j+1)<maxY&&board[i+1][j+1]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
+                    if((i-2)>=0&&(i+1)<boardSize&&(j-2)>=minY&&(j+1)<maxY&&board[i+1][j+1]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
                         if((i+2)<boardSize&&(j+2)<boardSize&&board[i+2][j+2]!="○")line++;
                         else if((i-3)>=0&&(j-3)>=0&&board[i-3][j-3]!="○")line++;
 
                     }
-                    if((i-3)>=minX&&(j-3)>=minY&&board[i-3][j-3]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
+                    if((i-3)>=0&&(j-3)>=0&&board[i-3][j-3]=="●"&&board[i-2][j-2]=="●"&&board[i-1][j-1]=="●"){
                         if((i+1)<boardSize&&(j+1)<boardSize&&board[i+1][j+1]!="○")line++;
                         else if((i-4)>=0&&(j-4)>=0&&board[i-4][j-4]!="○")line++;
 
                     }
                     //------------4-----------
-                    if((i+3)<maxX&&(j-3)>=minY&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i+3][j-3]=="●"){
+                    if((i+3)<boardSize&&(j-3)>=0&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i+3][j-3]=="●"){
                         if((i+4)<boardSize&&(j-4)>=0&&board[i+4][j-4]!="○")line++;
                         else if((i-1)>=0&&(j+1)<boardSize&&board[i-1][j+1]!="○")line++;
 
                     }
-                    if((i-1)>=minX&&(i+2)<maxX&&(j+1)<maxY&&(j-2)>=minY&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i-1][j+1]=="●"){
+                    if((i-1)>=0&&(i+2)<boardSize&&(j+1)<maxY&&(j-2)>=minY&&board[i+1][j-1]=="●"&&board[i+2][j-2]=="●"&&board[i-1][j+1]=="●"){
                         if((i+3)<boardSize&&(i-3)>=0&&board[i+3][j-3]!="○")line++;
                         else if((i-2)>=0&&(j+2)<boardSize&&board[i-2][j+2]!="○")line++;
 
                     }
-                    if((i-2)>=minX&&(i+1)<maxX&&(j+2)<maxY&&(j-1)>=minY&&board[i+1][j-1]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
+                    if((i-2)>=0&&(i+1)<boardSize&&(j+2)<maxY&&(j-1)>=minY&&board[i+1][j-1]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
                         if((i+2)<boardSize&&(j-2)>=0&&board[i+2][j-2]!="○")line++;
                         else if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]!="○")line++;
 
                     }
-                    if((i-3)>=minX&&(j+3)<maxY&&board[i-3][j+3]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
+                    if((i-3)>=0&&(j+3)<boardSize&&board[i-3][j+3]=="●"&&board[i-2][j+2]=="●"&&board[i-1][j+1]=="●"){
                         if((i+1)<boardSize&&(j-1)>=0&&board[i+1][j-1]!="○")line++;
                         else if((i-4)>=0&&(j+4)<boardSize&&board[i-4][j+4]!="○")line++;
 

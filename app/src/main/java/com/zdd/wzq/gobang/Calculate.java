@@ -43,7 +43,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来两步会不会赢
@@ -79,7 +79,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
 *推算电脑下该位置接下来三步会不会赢
@@ -114,7 +114,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来三步会不会赢
@@ -150,7 +150,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *推算电脑下该位置接下来四步会不会赢
@@ -185,7 +185,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来四步会不会赢
@@ -221,7 +221,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *推算电脑下该位置接下来五步会不会赢
@@ -256,7 +256,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来五步会不会赢
@@ -292,7 +292,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *推算电脑下该位置接下来六步会不会赢
@@ -327,7 +327,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来六步会不会赢
@@ -363,7 +363,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *推算电脑下该位置接下来七步会不会赢
@@ -398,7 +398,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来七步会不会赢
@@ -434,7 +434,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *推算电脑下该位置接下来八步会不会赢
@@ -469,7 +469,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来八步会不会赢
@@ -505,7 +505,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *推算电脑下该位置接下来九步会不会赢
@@ -540,7 +540,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来九步会不会赢
@@ -576,7 +576,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *推算电脑下该位置接下来十步会不会赢
@@ -611,7 +611,7 @@ public class Calculate{
             if(endGo==1){break;}
             if(endGo==2){return 1;}
         }
-        return 0;
+        return 2;
     }
     /*
     *推算玩家下该位置接下来十步会不会赢
@@ -647,7 +647,7 @@ public class Calculate{
             if(endGo==1){return 1;}
         }
 
-        return 0;
+        return 2;
     }
     /*
     *假设电脑攻击

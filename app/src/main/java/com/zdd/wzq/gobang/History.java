@@ -19,15 +19,34 @@ public class History {
             stepList.remove(i);
         }
     }
-    public void forward(){
-
+    public List<Step> getForwardList(){
+        List<Step> list = new ArrayList<>();
+        if (position<=2){
+            return list;
+        }
+        position -=2;
+        for (int i = 0;i<position;i++){
+            list.add(stepList.get(i));
+        }
+        return list;
     }
-
+    public List<Step> getNextList(){
+        List<Step> list = new ArrayList<>();
+        if (position>=(stepList.size()-2)){
+            list.addAll(stepList);
+            return list;
+        }
+        position +=2;
+        for (int i = 0;i<position;i++){
+            list.add(stepList.get(i));
+        }
+        return list;
+    }
     public class Step{
 
-        private String piece;
-        private int x;
-        private int y;
+        public String piece;
+        public int x;
+        public int y;
 
         public Step(int x,int y,String piece){
             this.x = x;
