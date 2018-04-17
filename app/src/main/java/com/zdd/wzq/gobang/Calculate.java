@@ -8,10 +8,225 @@ public class Calculate{
     public Calculate(){
         this.board = new String[boardSize][boardSize];
     }
+
+
     /*
-    *推算电脑下该位置接下来几步会不会赢
+*推算电脑下该位置接下来两步会不会赢
+*/
+    public int demoComputer2(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<2;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来两步会不会赢
     */
-    public int demoComputer(String[][] newboard,int coordinatesX,int coordinatesY){
+    public int demoPlayer2(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<2;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+*推算电脑下该位置接下来三步会不会赢
+*/
+    public int demoComputer3(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<3;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来三步会不会赢
+    */
+    public int demoPlayer3(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<3;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+    *推算电脑下该位置接下来四步会不会赢
+    */
+    public int demoComputer4(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<4;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来四步会不会赢
+    */
+    public int demoPlayer4(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<4;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+    *推算电脑下该位置接下来五步会不会赢
+    */
+    public int demoComputer5(String[][] newboard,int coordinatesX,int coordinatesY){
         board = newboard;
         Calculate cal= new Calculate();
         board[coordinatesX][coordinatesY]= "○";
@@ -44,17 +259,366 @@ public class Calculate{
         return 0;
     }
     /*
-    *推算玩家下该位置接下来几步会不会赢
+    *推算玩家下该位置接下来五步会不会赢
     */
-    public int demoPlayer(String[][] newboard,int coordinatesX,int coordinatesY){
+    public int demoPlayer5(String[][] newboard,int coordinatesX,int coordinatesY){
         board = newboard;
         Calculate cal= new Calculate();
-        //String normal = cal.ifNormalGetPieces(board);
-        //String[] normalxy = normal.split(" ");
-        // int normalx = Integer.parseInt(normalxy[0]);
-        // int normaly = Integer.parseInt(normalxy[1]);
-        // if((normalx==coordinatesX)&&(normaly==coordinatesY)){return 0;}
-        // board[normalx][normaly] = "○";
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<5;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+    *推算电脑下该位置接下来六步会不会赢
+    */
+    public int demoComputer6(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<6;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来六步会不会赢
+    */
+    public int demoPlayer6(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<6;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+    *推算电脑下该位置接下来七步会不会赢
+    */
+    public int demoComputer7(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<7;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来七步会不会赢
+    */
+    public int demoPlayer7(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<7;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+    *推算电脑下该位置接下来八步会不会赢
+    */
+    public int demoComputer8(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<8;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来八步会不会赢
+    */
+    public int demoPlayer8(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<8;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+    *推算电脑下该位置接下来九步会不会赢
+    */
+    public int demoComputer9(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<9;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来九步会不会赢
+    */
+    public int demoPlayer9(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<9;dep++){
+            String signal;
+            signal =cal.ifPlayerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}    //2表示电脑赢了
+            if(endGo==1){return 1;}//1表示玩家赢了
+            signal =cal.ifComputerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==2){break;}
+            if(endGo==1){return 1;}
+        }
+
+        return 0;
+    }
+    /*
+    *推算电脑下该位置接下来十步会不会赢
+    */
+    public int demoComputer10(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
+        board[coordinatesX][coordinatesY]= "○";
+        for(int dep=0;dep<10;dep++){
+            String signal;
+            signal =cal.ifPlayerDefense(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "●";}
+            //cal.printBoard();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}    //1表示玩家赢了
+            if(endGo==2){return 1;}//2表示电脑赢了
+            signal =cal.ifComputerAttack(board);
+            if(signal==null)return 0;
+            if(signal!=null){
+                String[] signalxy = signal.split(" ");
+                int x = Integer.parseInt(signalxy[0]);
+                int y = Integer.parseInt(signalxy[1]);
+                board[x][y] = "☆";}
+            //cal.printBoard();
+            cal.change();
+            endGo=cal.whoWin(board);
+            if(endGo==1){break;}
+            if(endGo==2){return 1;}
+        }
+        return 0;
+    }
+    /*
+    *推算玩家下该位置接下来十步会不会赢
+    */
+    public int demoPlayer10(String[][] newboard,int coordinatesX,int coordinatesY){
+        board = newboard;
+        Calculate cal= new Calculate();
         board[coordinatesX][coordinatesY]= "○";
         for(int dep=0;dep<10;dep++){
             String signal;

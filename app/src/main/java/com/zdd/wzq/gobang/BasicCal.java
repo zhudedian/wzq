@@ -630,7 +630,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+2)<maxY){
+                if((j+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i][j+k]=="○")o++;
@@ -643,7 +643,7 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<maxX){
+                if((i+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i+k][j]=="○")o++;
@@ -657,7 +657,7 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<maxX&&(j+2)<maxY){
+                if((i+2)<boardSize&&(j+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i+k][j+k]=="○")o++;
@@ -671,7 +671,7 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>minX&&(j+2)<maxY){
+                if((i-2)>0&&(j+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i-k][j+k]=="○")o++;
@@ -695,7 +695,7 @@ public class BasicCal{
         board=newboard;
         for(int i=minX; i<maxX; i++){
             for(int j=minY; j<maxY;j++){
-                if((j+2)<maxY){
+                if((j+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i][j+k]=="●")o++;
@@ -708,7 +708,7 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<maxX){
+                if((i+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i+k][j]=="●")o++;
@@ -723,7 +723,7 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i+2)<maxX&&(j+2)<maxY){
+                if((i+2)<boardSize&&(j+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i+k][j+k]=="●")o++;
@@ -737,7 +737,7 @@ public class BasicCal{
                         }
                     }
                 }
-                if((i-2)>minX&&(j+2)<maxY){
+                if((i-2)>0&&(j+2)<boardSize){
                     int o=0;
                     for(int k=0; k<3;k++){
                         if(board[i-k][j+k]=="●")o++;
