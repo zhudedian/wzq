@@ -15,16 +15,22 @@ public class History {
     public void write(int x,int y,String piece){
         stepList.add(position,new Step(x,y,piece));
         position++;
-        for (int i = position;i<stepList.size();i++){
+        for (int i = position;i<stepList.size();){
             stepList.remove(i);
         }
     }
+    public void clean(){
+        position = 0;
+        stepList.clear();
+    }
     public List<Step> getForwardList(){
         List<Step> list = new ArrayList<>();
-        if (position<=2){
+        if (position<2){
             return list;
         }
-        position -=2;
+        if (position>=2) {
+            position -= 2;
+        }
         for (int i = 0;i<position;i++){
             list.add(stepList.get(i));
         }
@@ -32,11 +38,13 @@ public class History {
     }
     public List<Step> getNextList(){
         List<Step> list = new ArrayList<>();
-        if (position>=(stepList.size()-2)){
+        if (position>(stepList.size()-2)){
             list.addAll(stepList);
             return list;
         }
-        position +=2;
+        if (position<=(stepList.size()-2)) {
+            position += 2;
+        }
         for (int i = 0;i<position;i++){
             list.add(stepList.get(i));
         }

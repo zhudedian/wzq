@@ -245,7 +245,7 @@ public class CheckerboardView extends ViewGroup {
                 pieceViews[i - 1][j - 1].postInvalidate();
             }
         }
-        gobang.initBoard();
+        gobang.restart();
         isStart = true;
         isEnded = false;
     }
